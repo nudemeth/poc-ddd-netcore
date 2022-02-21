@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuctionHouse.Domain.Event
+namespace AuctionHouse.Domain.Auction
 {
-    internal record OutBid
+    internal record OutBidEvent
     {
-        internal OutBid(Guid auctionId, Guid bidderId)
+        internal OutBidEvent(Guid auctionId, Guid bidderId)
         {
             if (auctionId == Guid.Empty)
                 throw new ArgumentNullException(nameof(auctionId));

@@ -1,11 +1,10 @@
-﻿using AuctionHouse.Domain.Model.Auction;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuctionHouse.Domain.Repository
+namespace AuctionHouse.Domain.Auction
 {
     internal interface IAuctionRepository
     {

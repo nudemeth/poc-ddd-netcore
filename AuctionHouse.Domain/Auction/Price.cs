@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuctionHouse.Domain.Model.Auction
+namespace AuctionHouse.Domain.Auction
 {
     internal record Price : ValueObject<Price>
     {

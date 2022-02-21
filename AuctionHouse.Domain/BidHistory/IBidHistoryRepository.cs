@@ -1,11 +1,11 @@
-﻿using AuctionHouse.Domain.Model.BidHistory;
+﻿using AuctionHouse.Domain.BidHistory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuctionHouse.Domain.Repository
+namespace AuctionHouse.Domain.BidHistory
 {
     internal interface IBidHistoryRepository
     {

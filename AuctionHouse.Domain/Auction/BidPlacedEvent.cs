@@ -1,15 +1,14 @@
-﻿using AuctionHouse.Domain.Model.Auction;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuctionHouse.Domain.Event
+namespace AuctionHouse.Domain.Auction
 {
-    internal class BidPlaced
+    internal class BidPlacedEvent
     {
-        internal BidPlaced(Guid auctionId, Guid bidderId, Money amountBid, DateTime timeOfBid)
+        internal BidPlacedEvent(Guid auctionId, Guid bidderId, Money amountBid, DateTime timeOfBid)
         {
             if (auctionId == Guid.Empty)
                 throw new ArgumentNullException(nameof(auctionId));

@@ -1,11 +1,11 @@
-﻿using AuctionHouse.Domain.Model.Auction;
+﻿using AuctionHouse.Domain.Auction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuctionHouse.Domain.Model.BidHistory
+namespace AuctionHouse.Domain.BidHistory
 {
     internal record Bid : ValueObject<Bid>
     {

@@ -1,4 +1,4 @@
-﻿namespace AuctionHouse.Domain.Model
+﻿namespace AuctionHouse.Domain
 {
     public class Entity<TId>
         where TId : struct

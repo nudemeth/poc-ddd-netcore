@@ -1,4 +1,4 @@
-﻿using AuctionHouse.Domain.Model.Auction;
+﻿using AuctionHouse.Domain.Auction;
 using System;
 using System.Collections.Generic;
 using System.Linq;

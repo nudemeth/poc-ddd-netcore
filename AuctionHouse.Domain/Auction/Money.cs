@@ -1,11 +1,10 @@
-﻿using AuctionHouse.Domain.Exception;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuctionHouse.Domain.Model.Auction
+namespace AuctionHouse.Domain.Auction
 {
     internal sealed record Money : ValueObject<Money>
     {

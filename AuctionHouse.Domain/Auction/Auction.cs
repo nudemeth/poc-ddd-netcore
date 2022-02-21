@@ -1,12 +1,11 @@
-﻿using AuctionHouse.Domain.Event;
-using AuctionHouse.Domain.Service;
+﻿using AuctionHouse.Domain.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuctionHouse.Domain.Model.Auction
+namespace AuctionHouse.Domain.Auction
 {
     internal class Auction : Entity<Guid>
     {
@@ -72,10 +71,10 @@ namespace AuctionHouse.Domain.Model.Auction
         private void Place(WinningBid newBid)
         {
             if (!FirstOffer() && WinningBid.WasMadeBy(newBid.Bidder))
-                DomainEvents.Raise(new OutBid(Id, WinningBid.Bidder));
+                DomainEvents.Raise(new OutBidEvent(Id, WinningBid.Bidder));
 
             WinningBid = newBid;
-            DomainEvents.Raise(new BidPlaced(Id, newBid.Bidder, newBid.CurrentAuctionPrice.Amount, newBid.TimeOfBid));
+            DomainEvents.Raise(new BidPlacedEvent(Id, newBid.Bidder, newBid.CurrentAuctionPrice.Amount, newBid.TimeOfBid));
         }
     }
 }
