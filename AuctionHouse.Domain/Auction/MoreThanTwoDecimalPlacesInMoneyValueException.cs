@@ -2,7 +2,7 @@
 
 namespace AuctionHouse.Domain.Auction
 {
-    internal class MoreThanTwoDecimalPlacesInMoneyValueException : Exception
+    public class MoreThanTwoDecimalPlacesInMoneyValueException : Exception
     {
     }
 }

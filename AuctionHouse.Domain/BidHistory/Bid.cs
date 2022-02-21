@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Domain.BidHistory
 {
-    internal record Bid : ValueObject<Bid>
+    public record Bid : ValueObject<Bid>
     {
-        internal Bid(Guid auctionId, Guid bidderId, Money amountBid, DateTime timeOfBid)
+        public Bid(Guid auctionId, Guid bidderId, Money amountBid, DateTime timeOfBid)
         {
             if (auctionId == Guid.Empty)
                 throw new ArgumentNullException(nameof(auctionId));

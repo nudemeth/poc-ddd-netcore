@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Domain
 {
-    internal class DomainEvents
+    public class DomainEvents
     {
         [ThreadStatic]
         private static List<Delegate> _actions;

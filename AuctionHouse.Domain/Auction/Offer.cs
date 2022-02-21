@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Domain.Auction
 {
-    internal record Offer : ValueObject<Offer>
+    public record Offer : ValueObject<Offer>
     {
-        internal Offer(Guid bidderId, Money maximumBid, DateTime timeOfOffer)
+        public Offer(Guid bidderId, Money maximumBid, DateTime timeOfOffer)
         {
             if (bidderId == Guid.Empty)
                 throw new ArgumentNullException("BidderId cannot be null");

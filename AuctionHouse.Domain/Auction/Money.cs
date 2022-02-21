@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Domain.Auction
 {
-    internal sealed record Money : ValueObject<Money>
+    public sealed record Money : ValueObject<Money>
     {
         private readonly decimal value;
 
-        internal Money()
+        public Money()
             : this(0m)
         {
         }
 
-        internal Money(decimal value)
+        public Money(decimal value)
         {
             if (value % 0.01m != 0)
                 throw new MoreThanTwoDecimalPlacesInMoneyValueException();

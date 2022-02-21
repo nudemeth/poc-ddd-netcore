@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Domain.BidHistory
 {
-    internal interface IBidHistoryRepository
+    public interface IBidHistoryRepository
     {
         int NoOfBidsFor(Guid autionId);
         void Add(Bid bid);

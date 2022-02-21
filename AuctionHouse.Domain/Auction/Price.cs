@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Domain.Auction
 {
-    internal record Price : ValueObject<Price>
+    public record Price : ValueObject<Price>
     {
         internal Price(Money amount)
         {

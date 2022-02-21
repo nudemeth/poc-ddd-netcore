@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuctionHouse.Domain
+namespace AuctionHouse.Application.Commands
 {
-    public abstract record ValueObject<T>
-        where T : ValueObject<T>
+    public record CreateAuctionCommandResponse
     {
+        public Guid AuctionId { get; init; }
     }
 }

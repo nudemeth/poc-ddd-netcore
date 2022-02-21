@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Domain.Auction
 {
-    internal class BidPlacedEvent
+    public class BidPlacedEvent
     {
-        internal BidPlacedEvent(Guid auctionId, Guid bidderId, Money amountBid, DateTime timeOfBid)
+        public BidPlacedEvent(Guid auctionId, Guid bidderId, Money amountBid, DateTime timeOfBid)
         {
             if (auctionId == Guid.Empty)
                 throw new ArgumentNullException(nameof(auctionId));
@@ -28,9 +28,9 @@ namespace AuctionHouse.Domain.Auction
             TimeOfBid = timeOfBid;
         }
 
-        internal Guid AuctionId { get; private set; }
-        internal Guid Bidder { get; private set; }
-        internal Money AmountBid { get; private set; }
-        internal DateTime TimeOfBid { get; private set; }
+        public Guid AuctionId { get; private set; }
+        public Guid Bidder { get; private set; }
+        public Money AmountBid { get; private set; }
+        public DateTime TimeOfBid { get; private set; }
     }
 }

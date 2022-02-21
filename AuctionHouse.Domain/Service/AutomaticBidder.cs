@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Domain.Service
 {
-    internal class AutomaticBidder
+    public class AutomaticBidder
     {
         internal IEnumerable<WinningBid> GenerateNextSequenceOfBidsAfter(Offer offer, WinningBid currentWinningBid)
         {

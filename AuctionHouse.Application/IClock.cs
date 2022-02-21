@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuctionHouse.Domain
+namespace AuctionHouse.Application
 {
-    public abstract record ValueObject<T>
-        where T : ValueObject<T>
+    public interface IClock
     {
+        DateTime Time();
     }
 }

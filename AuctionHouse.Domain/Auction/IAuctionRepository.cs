@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Domain.Auction
 {
-    internal interface IAuctionRepository
+    public interface IAuctionRepository
     {
-        void Add(Auction auction);
-        Auction FindBy(Guid Id);
+        Task AddAsync(Auction auction);
+        Auction FindByAsync(Guid Id);
     }
 }

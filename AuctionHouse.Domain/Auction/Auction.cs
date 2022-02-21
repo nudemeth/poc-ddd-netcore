@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Domain.Auction
 {
-    internal class Auction : Entity<Guid>
+    public class Auction : Entity<Guid>
     {
-        internal Auction(Guid id, Money startingPrice, DateTime endsAt)
+        public Auction(Guid id, Money startingPrice, DateTime endsAt)
         {
             if (id == Guid.Empty)
                 throw new ArgumentNullException("Auction Id cannot be null");

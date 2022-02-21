@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Domain.Auction
 {
-    internal record WinningBid : ValueObject<WinningBid>
+    public record WinningBid : ValueObject<WinningBid>
     {
         internal WinningBid(Guid bidder, Money maximumBid, Money bid, DateTime timeOfBid)
         {
