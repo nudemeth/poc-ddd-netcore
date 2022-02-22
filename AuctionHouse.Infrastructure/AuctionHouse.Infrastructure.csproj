@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DtoConfigs\" />
     <Folder Include="Dtos\" />
     <Folder Include="Repositories\" />
   </ItemGroup>

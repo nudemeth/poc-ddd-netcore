@@ -1,4 +1,5 @@
 ﻿using AuctionHouse.Application;
+using AuctionHouse.Infrastructure.DtoConfigs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,12 @@ namespace AuctionHouse.Infrastructure
             {
                 throw new ConcurrencyException("The data has already been updated by other.", ex);
             }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new AuctionDtoConfig());
+            modelBuilder.ApplyConfiguration(new BidHistoryDtoConfig());
         }
     }
 }
