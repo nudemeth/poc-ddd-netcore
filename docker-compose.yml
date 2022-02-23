@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  auctionhouse.api:
+    image: ${DOCKER_REGISTRY-}auctionhouseapi
+    build:
+      context: .
+      dockerfile: AuctionHouse.Api/Dockerfile
+
+  auctionhouse.postgresql:
+    image: postgres:14
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: dba
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: auction_house

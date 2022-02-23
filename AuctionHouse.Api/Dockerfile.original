@@ -8,9 +8,6 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["AuctionHouse.Api/AuctionHouse.Api.csproj", "AuctionHouse.Api/"]
-COPY ["AuctionHouse.Infrastructure/AuctionHouse.Infrastructure.csproj", "AuctionHouse.Infrastructure/"]
-COPY ["AuctionHouse.Application/AuctionHouse.Application.csproj", "AuctionHouse.Application/"]
-COPY ["AuctionHouse.Domain/AuctionHouse.Domain.csproj", "AuctionHouse.Domain/"]
 RUN dotnet restore "AuctionHouse.Api/AuctionHouse.Api.csproj"
 COPY . .
 WORKDIR "/src/AuctionHouse.Api"

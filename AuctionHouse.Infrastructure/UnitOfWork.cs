@@ -9,8 +9,13 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Infrastructure
 {
-    public class EntityFrameworkUnitOfWork : DbContext, IUnitOfWork
+    public class UnitOfWork : DbContext, IUnitOfWork
     {
+        public UnitOfWork(DbContextOptions<UnitOfWork> options)
+            : base(options)
+        {
+        }
+
         public Task ClearAsync()
         {
             throw new NotImplementedException();

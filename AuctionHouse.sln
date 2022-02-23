@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionHouse.Api", "AuctionHouse.Api\AuctionHouse.Api.csproj", "{6987D56D-A97C-4247-8D61-C75F96417565}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionHouse.Api", "AuctionHouse.Api\AuctionHouse.Api.csproj", "{6987D56D-A97C-4247-8D61-C75F96417565}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionHouse.Application", "AuctionHouse.Application\AuctionHouse.Application.csproj", "{7E01952E-7492-4FE5-AC7F-694455E75A15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionHouse.Application", "AuctionHouse.Application\AuctionHouse.Application.csproj", "{7E01952E-7492-4FE5-AC7F-694455E75A15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionHouse.Infrastructure", "AuctionHouse.Infrastructure\AuctionHouse.Infrastructure.csproj", "{CA2978DD-5C44-4F55-9B41-585242061667}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionHouse.Infrastructure", "AuctionHouse.Infrastructure\AuctionHouse.Infrastructure.csproj", "{CA2978DD-5C44-4F55-9B41-585242061667}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionHouse.Domain", "AuctionHouse.Domain\AuctionHouse.Domain.csproj", "{ACE523AF-8122-4ACE-BE47-2E1C7E952AA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionHouse.Domain", "AuctionHouse.Domain\AuctionHouse.Domain.csproj", "{ACE523AF-8122-4ACE-BE47-2E1C7E952AA1}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0B0EEACD-A1EC-43A1-AA95-024D2DE0FE23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{ACE523AF-8122-4ACE-BE47-2E1C7E952AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACE523AF-8122-4ACE-BE47-2E1C7E952AA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACE523AF-8122-4ACE-BE47-2E1C7E952AA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B0EEACD-A1EC-43A1-AA95-024D2DE0FE23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B0EEACD-A1EC-43A1-AA95-024D2DE0FE23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B0EEACD-A1EC-43A1-AA95-024D2DE0FE23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B0EEACD-A1EC-43A1-AA95-024D2DE0FE23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
