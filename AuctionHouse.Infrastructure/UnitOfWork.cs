@@ -1,5 +1,6 @@
 ﻿using AuctionHouse.Application;
 using AuctionHouse.Infrastructure.DtoConfigs;
+using AuctionHouse.Infrastructure.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,10 @@ namespace AuctionHouse.Infrastructure
             : base(options)
         {
         }
+
+        public DbSet<AuctionDto> Auction { get; set; } = default!;
+        public DbSet<BidHistoryDto> BidHistory { get; set; } = default!;
+        public DbSet<DummyDto> Dummy { get; set; } = default!;
 
         public Task ClearAsync()
         {
@@ -40,6 +45,8 @@ namespace AuctionHouse.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<DummyDto>().HasNoKey();
+
             modelBuilder.ApplyConfiguration(new AuctionDtoConfig());
             modelBuilder.ApplyConfiguration(new BidHistoryDtoConfig());
         }

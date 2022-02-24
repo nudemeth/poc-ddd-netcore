@@ -23,25 +23,7 @@ namespace AuctionHouse.Application.Queries
 
         public async Task<AuctionStatusQueryResponse> Handle(AuctionStatusQueryRequest request, CancellationToken cancellationToken)
         {
-            var numberOfBids = bidHistoryRepository.NoOfBidsFor(request.AuctionId);
-            var auctionDto = await unitOfWork.ExecuteRawQueryAsync<AuctionDto>("");
-            var status = new AuctionStatusQueryResponse(
-                auctionDto.Id,
-                auctionDto.CurrentPrice,
-                auctionDto.AuctionEnds,
-                auctionDto.WinningBidderId,
-                numberOfBids,
-                clock.Time());
-
-            return status;
-        }
-
-        public record AuctionDto
-        {
-            public Guid Id { get; init; }
-            public decimal CurrentPrice { get; init; }
-            public DateTime AuctionEnds { get; init; }
-            public Guid WinningBidderId { get; init; }
+            return await unitOfWork.ExecuteRawQueryAsync<AuctionStatusQueryResponse>("");
         }
     }
 }

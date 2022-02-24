@@ -12,6 +12,6 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: dba
-      POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: auction_house
+      - POSTGRES_USER=dba
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=auction_house
