@@ -10,7 +10,6 @@ namespace AuctionHouse.Application.Queries
     {
         public Guid Bidder { get; init; }
         public decimal AmountBid { get; init; }
-        public string Currency { get; init; }
         public DateTime TimeOfBid { get; init; }
     }
 }

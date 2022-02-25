@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Application.Queries
 {
-    public record BidHistoryQueryRequest : IRequest<BidHistoryQueryResponse>
+    public record BidHistoryQueryRequest : IRequest<IEnumerable<BidHistoryQueryResponse>>
     {
         public Guid AuctionId { get; init; }
     }

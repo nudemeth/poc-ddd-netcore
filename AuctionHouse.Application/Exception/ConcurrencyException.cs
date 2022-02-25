@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuctionHouse.Application
+namespace AuctionHouse.Application.Exception
 {
-    public class ConcurrencyException : Exception
+    public class ConcurrencyException : System.Exception
     {
-        public ConcurrencyException(string message, Exception innerException)
+        public ConcurrencyException(string message, System.Exception innerException)
             : base(message, innerException)
         {
         }

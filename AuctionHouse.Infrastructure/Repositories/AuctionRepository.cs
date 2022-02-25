@@ -14,7 +14,7 @@ namespace AuctionHouse.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Auction FindByAsync(Guid Id)
+        public Task<Auction> FindByAsync(Guid Id)
         {
             throw new NotImplementedException();
         }

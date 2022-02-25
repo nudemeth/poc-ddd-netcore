@@ -1,4 +1,5 @@
-﻿using AuctionHouse.Domain.BidHistory;
+﻿using AuctionHouse.Application.Exception;
+using AuctionHouse.Domain.BidHistory;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,20 @@ namespace AuctionHouse.Application.Queries
 
         public async Task<AuctionStatusQueryResponse> Handle(AuctionStatusQueryRequest request, CancellationToken cancellationToken)
         {
-            return await unitOfWork.ExecuteRawQueryAsync<AuctionStatusQueryResponse>("");
+            var numberOfBids = await bidHistoryRepository.NoOfBidsForAsync(request.AuctionId);
+            var response = await unitOfWork.ExecuteRawQueryAsync(
+                "SELECT id, current_price, bidder_member_id as winning_bidder_id, auction_ends FROM auction WHERE id = {0}",
+                data => data
+                    .Select(d => new AuctionStatusQueryResponse(d.id, d.current_price, d.auction_ends, d.winning_bidder_id, numberOfBids, clock.Time()))
+                    .FirstOrDefault(),
+                request.AuctionId);
+
+            if (response == null)
+            {
+                throw new NotFoundException($"The auction cannot be found: AuctionId = {request.AuctionId}");
+            }
+
+            return response;
         }
     }
 }

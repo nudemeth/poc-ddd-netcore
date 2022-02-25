@@ -1,9 +1,11 @@
 ﻿using AuctionHouse.Application;
+using AuctionHouse.Application.Exception;
 using AuctionHouse.Infrastructure.DtoConfigs;
 using AuctionHouse.Infrastructure.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,16 +21,17 @@ namespace AuctionHouse.Infrastructure
 
         public DbSet<AuctionDto> Auction { get; set; } = default!;
         public DbSet<BidHistoryDto> BidHistory { get; set; } = default!;
-        public DbSet<DummyDto> Dummy { get; set; } = default!;
+        public DbSet<dynamic> Dummy { get; set; } = default!;
 
         public Task ClearAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<T> ExecuteRawQueryAsync<T>(string rawQuery)
+        public Task<TResult> ExecuteRawQueryAsync<TResult>(string rawQuery, Func<IEnumerable<dynamic>, TResult> map, params object[] @params)
         {
-            throw new NotImplementedException();
+            var result = this.Dummy.FromSqlRaw(rawQuery, @params);
+            return Task.FromResult(map(result));
         }
 
         public async Task SaveAsync()

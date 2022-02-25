@@ -1,4 +1,5 @@
-﻿using AuctionHouse.Domain;
+﻿using AuctionHouse.Application.Exception;
+using AuctionHouse.Domain;
 using AuctionHouse.Domain.Auction;
 using AuctionHouse.Domain.BidHistory;
 using MediatR;
@@ -32,8 +33,7 @@ namespace AuctionHouse.Application.Commands
                 using (DomainEvents.Register(OutBid()))
                 using (DomainEvents.Register(BidPlaced()))
                 {
-                    var auction = auctionRepository.FindByAsync(request.AuctionId);
-
+                    var auction = await auctionRepository.FindByAsync(request.AuctionId);
                     var bidAmount = new Money(request.Amount);
 
                     auction.PlaceBidFor(new Offer(request.MemberId, bidAmount, clock.Time()), clock.Time());

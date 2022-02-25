@@ -14,7 +14,7 @@ namespace AuctionHouse.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public int NoOfBidsFor(Guid autionId)
+        public Task<int> NoOfBidsForAsync(Guid autionId)
         {
             throw new NotImplementedException();
         }

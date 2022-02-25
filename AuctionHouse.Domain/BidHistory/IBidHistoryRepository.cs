@@ -9,7 +9,7 @@ namespace AuctionHouse.Domain.BidHistory
 {
     public interface IBidHistoryRepository
     {
-        int NoOfBidsFor(Guid autionId);
+        Task<int> NoOfBidsForAsync(Guid autionId);
         void Add(Bid bid);
     }
 }

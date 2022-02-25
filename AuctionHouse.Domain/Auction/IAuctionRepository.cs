@@ -9,6 +9,6 @@ namespace AuctionHouse.Domain.Auction
     public interface IAuctionRepository
     {
         Task AddAsync(Auction auction);
-        Auction FindByAsync(Guid Id);
+        Task<Auction> FindByAsync(Guid Id);
     }
 }
