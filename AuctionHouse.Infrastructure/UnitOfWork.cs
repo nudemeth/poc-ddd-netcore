@@ -48,7 +48,7 @@ namespace AuctionHouse.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<DummyDto>().HasNoKey();
+            modelBuilder.Entity<dynamic>().HasNoKey();
 
             modelBuilder.ApplyConfiguration(new AuctionDtoConfig());
             modelBuilder.ApplyConfiguration(new BidHistoryDtoConfig());
