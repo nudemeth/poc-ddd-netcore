@@ -11,8 +11,6 @@ namespace AuctionHouse.Application
     {
         Task SaveAsync();
 
-        Task<TResult> ExecuteRawQueryAsync<TResult>(string rawQuery, Func<IEnumerable<dynamic>, TResult> map, params object[] @params);
-
         Task ClearAsync();
     }
 }

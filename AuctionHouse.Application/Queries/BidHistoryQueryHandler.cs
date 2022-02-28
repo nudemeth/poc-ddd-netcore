@@ -9,24 +9,23 @@ namespace AuctionHouse.Application.Queries
 {
     public class BidHistoryQueryHandler : IRequestHandler<BidHistoryQueryRequest, IEnumerable<BidHistoryQueryResponse>>
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IDataQueryable queryable;
 
-        public BidHistoryQueryHandler(IUnitOfWork unitOfWork)
+        public BidHistoryQueryHandler(IDataQueryable queryable)
         {
-            this.unitOfWork = unitOfWork;
+            this.queryable = queryable;
         }
 
         public async Task<IEnumerable<BidHistoryQueryResponse>> Handle(BidHistoryQueryRequest request, CancellationToken cancellationToken)
         {
-            return await unitOfWork.ExecuteRawQueryAsync(
-                "SELECT bidder_id, bid, time_of_bid FROM bid_history WHERE auction_id = {0} ORDER BY bid DESC, time_of_bid ASC",
+            return await queryable.GetBidHistoryAsync(
                 data => data.Select(d => new BidHistoryQueryResponse
                 {
                     AmountBid = d.bid,
                     Bidder = d.bidder_id,
                     TimeOfBid = d.time_of_bid,
                 }),
-                request.AuctionId);
+                new Dictionary<string, object> { { "@AuctionId", request.AuctionId } });
         }
     }
 }

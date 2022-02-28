@@ -21,17 +21,10 @@ namespace AuctionHouse.Infrastructure
 
         public DbSet<AuctionDto> Auction { get; set; } = default!;
         public DbSet<BidHistoryDto> BidHistory { get; set; } = default!;
-        public DbSet<dynamic> Dummy { get; set; } = default!;
 
         public Task ClearAsync()
         {
             throw new NotImplementedException();
-        }
-
-        public Task<TResult> ExecuteRawQueryAsync<TResult>(string rawQuery, Func<IEnumerable<dynamic>, TResult> map, params object[] @params)
-        {
-            var result = this.Dummy.FromSqlRaw(rawQuery, @params);
-            return Task.FromResult(map(result));
         }
 
         public async Task SaveAsync()
@@ -48,8 +41,6 @@ namespace AuctionHouse.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<dynamic>().HasNoKey();
-
             modelBuilder.ApplyConfiguration(new AuctionDtoConfig());
             modelBuilder.ApplyConfiguration(new BidHistoryDtoConfig());
         }
