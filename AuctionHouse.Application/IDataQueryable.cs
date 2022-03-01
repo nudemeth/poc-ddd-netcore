@@ -2,8 +2,9 @@
 {
     public interface IDataQueryable
     {
-        Task<TResult> GetAuctionStatusAsync<TResult>(Func<IEnumerable<dynamic>, TResult> map, IDictionary<string, object> @params);
-
-        Task<TResult> GetBidHistoryAsync<TResult>(Func<IEnumerable<dynamic>, TResult> map, IDictionary<string, object> @params);
+        Task<TResult> ExecuteQueryAsync<TResult>(
+            string command,
+            IDictionary<string, object> @params,
+            Func<IEnumerable<dynamic>, TResult> map);
     }
 }

@@ -18,17 +18,9 @@ namespace AuctionHouse.Infrastructure.Queries
             this.connection = connection;
         }
 
-        public async Task<TResult> GetAuctionStatusAsync<TResult>(Func<IEnumerable<dynamic>, TResult> map, IDictionary<string, object> @params)
+        public async Task<TResult> ExecuteQueryAsync<TResult>(string command, IDictionary<string, object> @params, Func<IEnumerable<dynamic>, TResult> map)
         {
-            var sql = "SELECT bidder_id, bid, time_of_bid FROM bid_history WHERE auction_id = @AuctionId ORDER BY bid DESC, time_of_bid ASC";
-            var result = await connection.QueryAsync(sql, @params);
-            return map(result);
-        }
-
-        public async Task<TResult> GetBidHistoryAsync<TResult>(Func<IEnumerable<dynamic>, TResult> map, IDictionary<string, object> @params)
-        {
-            var sql = "SELECT id, current_price, bidder_member_id as winning_bidder_id, auction_ends FROM auction WHERE id = @AuctionId";
-            var result = await connection.QueryAsync(sql, @params);
+            var result = await connection.QueryAsync(command, @params);
             return map(result);
         }
     }

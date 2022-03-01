@@ -25,11 +25,12 @@ namespace AuctionHouse.Application.Queries
         public async Task<AuctionStatusQueryResponse> Handle(AuctionStatusQueryRequest request, CancellationToken cancellationToken)
         {
             var numberOfBids = await bidHistoryRepository.NoOfBidsForAsync(request.AuctionId);
-            var response = await queryable.GetAuctionStatusAsync(
+            var response = await queryable.ExecuteQueryAsync(
+                "SELECT bidder_id, bid, time_of_bid FROM bid_history WHERE auction_id = @AuctionId ORDER BY bid DESC, time_of_bid ASC",
+                new Dictionary<string, object> { { "@AuctionId", request.AuctionId } },
                 data => data
                     .Select(d => new AuctionStatusQueryResponse(d.id, d.current_price, d.auction_ends, d.winning_bidder_id, numberOfBids, clock.Time()))
-                    .FirstOrDefault(),
-                new Dictionary<string, object> { { "@AuctionId", request.AuctionId } });
+                    .FirstOrDefault());
 
             if (response == null)
             {

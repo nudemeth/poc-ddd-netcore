@@ -18,14 +18,15 @@ namespace AuctionHouse.Application.Queries
 
         public async Task<IEnumerable<BidHistoryQueryResponse>> Handle(BidHistoryQueryRequest request, CancellationToken cancellationToken)
         {
-            return await queryable.GetBidHistoryAsync(
+            return await queryable.ExecuteQueryAsync(
+                "SELECT id, current_price, bidder_member_id as winning_bidder_id, auction_ends FROM auction WHERE id = @AuctionId",
+                new Dictionary<string, object> { { "@AuctionId", request.AuctionId } },
                 data => data.Select(d => new BidHistoryQueryResponse
                 {
                     AmountBid = d.bid,
                     Bidder = d.bidder_id,
                     TimeOfBid = d.time_of_bid,
-                }),
-                new Dictionary<string, object> { { "@AuctionId", request.AuctionId } });
+                }));
         }
     }
 }
