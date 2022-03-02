@@ -1,6 +1,8 @@
 ﻿using AuctionHouse.Application;
+using AuctionHouse.Application.Queries;
 using AuctionHouse.Domain.Auction;
 using AuctionHouse.Domain.BidHistory;
+using AuctionHouse.Infrastructure.Queries;
 using AuctionHouse.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +28,9 @@ namespace AuctionHouse.Infrastructure
                 .AddScoped<IAuctionRepository, AuctionRepository>()
                 .AddScoped<IBidHistoryRepository, BidHistoryRepository>()
                 .AddScoped<IUnitOfWork, UnitOfWork>()
-                .AddScoped<IClock, SystemClock>();
+                .AddScoped<IClock, SystemClock>()
+                .AddScoped<IDataQueryable<AuctionStatusQueryResponse>, PostgreSqlQuery<AuctionStatusQueryResponse>>()
+                .AddScoped<IDataQueryable<BidHistoryQueryResponse>, PostgreSqlQuery<BidHistoryQueryResponse>>();
 
             return services;
         }

@@ -9,7 +9,7 @@ using Dapper;
 
 namespace AuctionHouse.Infrastructure.Queries
 {
-    public class PostgreSqlQuery : IDataQueryable
+    public abstract class PostgreSqlQuery<TResult> : IDataQueryable<TResult>
     {
         private readonly IDbConnection connection;
 
@@ -18,9 +18,11 @@ namespace AuctionHouse.Infrastructure.Queries
             this.connection = connection;
         }
 
-        public async Task<TResult> ExecuteQueryAsync<TResult>(string command, IDictionary<string, object> @params, Func<IEnumerable<dynamic>, TResult> map)
+        protected abstract string Command { get; }
+
+        public virtual async Task<TResult> ExecuteQueryAsync(IDictionary<string, object> @params, Func<IEnumerable<dynamic>, TResult> map)
         {
-            var result = await connection.QueryAsync(command, @params);
+            var result = await connection.QueryAsync(Command, @params);
             return map(result);
         }
     }

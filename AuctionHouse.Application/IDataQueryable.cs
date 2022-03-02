@@ -1,9 +1,8 @@
 ﻿namespace AuctionHouse.Application
 {
-    public interface IDataQueryable
+    public interface IDataQueryable<TResult>
     {
-        Task<TResult> ExecuteQueryAsync<TResult>(
-            string command,
+        Task<TResult> ExecuteQueryAsync(
             IDictionary<string, object> @params,
             Func<IEnumerable<dynamic>, TResult> map);
     }
