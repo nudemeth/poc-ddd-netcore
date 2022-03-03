@@ -29,12 +29,7 @@ namespace AuctionHouse.Application.Queries
                 new Dictionary<string, object> { { "@AuctionId", request.AuctionId } },
                 data => data
                     .Select(d => new AuctionStatusQueryResponse(d.id, d.current_price, d.auction_ends, d.winning_bidder_id, numberOfBids, clock.Time()))
-                    .FirstOrDefault());
-
-            if (response == null)
-            {
-                throw new NotFoundException($"The auction cannot be found: AuctionId = {request.AuctionId}");
-            }
+                    .SingleOrDefault() ?? throw new NotFoundException($"The auction cannot be found: AuctionId = {request.AuctionId}"));
 
             return response;
         }
