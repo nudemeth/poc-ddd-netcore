@@ -20,9 +20,9 @@ namespace AuctionHouse.Infrastructure.Queries
 
         protected abstract string Command { get; }
 
-        public virtual async Task<TResult> ExecuteQueryAsync(IDictionary<string, object> @params, Func<IEnumerable<dynamic>, TResult> map)
+        public virtual async Task<TResult> ExecuteQueryAsync<TData>(IDictionary<string, object> @params, Func<IEnumerable<TData>, TResult> map)
         {
-            var result = await connection.QueryAsync(Command, @params);
+            var result = await connection.QueryAsync<TData>(Command, @params);
             return map(result);
         }
     }

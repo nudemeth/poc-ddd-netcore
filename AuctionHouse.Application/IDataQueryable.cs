@@ -2,8 +2,8 @@
 {
     public interface IDataQueryable<TResult>
     {
-        Task<TResult> ExecuteQueryAsync(
+        Task<TResult> ExecuteQueryAsync<TData>(
             IDictionary<string, object> @params,
-            Func<IEnumerable<dynamic>, TResult> map);
+            Func<IEnumerable<TData>, TResult> map);
     }
 }
