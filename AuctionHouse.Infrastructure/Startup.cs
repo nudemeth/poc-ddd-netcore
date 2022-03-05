@@ -7,8 +7,10 @@ using AuctionHouse.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,12 +27,13 @@ namespace AuctionHouse.Infrastructure
                 {
                     builder.UseNpgsql(configuration.GetConnectionString("default"));
                 })
+                .AddTransient<IDbConnection>(s => new NpgsqlConnection(configuration.GetConnectionString("default")))
                 .AddScoped<IAuctionRepository, AuctionRepository>()
                 .AddScoped<IBidHistoryRepository, BidHistoryRepository>()
                 .AddScoped<IUnitOfWork, UnitOfWork>()
                 .AddScoped<IClock, SystemClock>()
-                .AddScoped<IDataQueryable<AuctionStatusQueryResponse>, PostgreSqlQuery<AuctionStatusQueryResponse>>()
-                .AddScoped<IDataQueryable<BidHistoryQueryResponse>, PostgreSqlQuery<BidHistoryQueryResponse>>();
+                .AddScoped<IDataQueryable<AuctionStatusQueryResponse>, AuctionStatusQuery>()
+                .AddScoped<IDataQueryable<BidHistoryQueryResponse>, BidHistoryQuery>();
 
             return services;
         }
@@ -39,6 +42,7 @@ namespace AuctionHouse.Infrastructure
         {
             using var scope = provider.CreateAsyncScope();
             using var context = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
+            await context.Database.EnsureCreatedAsync();
             await context.Database.MigrateAsync();
 
             return provider;

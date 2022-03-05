@@ -8,7 +8,11 @@ namespace AuctionHouse.Domain.Auction
 {
     public record Price : ValueObject<Price>
     {
-        internal Price(Money amount)
+        private Price()
+        {
+        }
+
+        public Price(Money amount)
         {
             if (amount == null)
                 throw new ArgumentNullException("Amount cannot be null");
@@ -16,9 +20,9 @@ namespace AuctionHouse.Domain.Auction
             Amount = amount;
         }
 
-        internal Money Amount { get; private set; }
+        public Money Amount { get; private set; }
 
-        internal Money BidIncrement()
+        public Money BidIncrement()
         {
             if (Amount.IsGreaterThanOrEqualTo(new Money(0.01m)) && Amount.IsLessThanOrEqualTo(new Money(0.99m)))
                 return Amount.Add(new Money(0.05m));
@@ -33,7 +37,7 @@ namespace AuctionHouse.Domain.Auction
 
         }
 
-        internal bool CanBeExceededBy(Money offer)
+        public bool CanBeExceededBy(Money offer)
         {
             return offer.IsGreaterThanOrEqualTo(BidIncrement());
         }

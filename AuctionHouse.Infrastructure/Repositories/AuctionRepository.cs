@@ -1,4 +1,6 @@
-﻿using AuctionHouse.Domain.Auction;
+﻿using AuctionHouse.Application;
+using AuctionHouse.Domain.Auction;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +11,21 @@ namespace AuctionHouse.Infrastructure.Repositories
 {
     public class AuctionRepository : IAuctionRepository
     {
-        public Task AddAsync(Auction auction)
+        private readonly UnitOfWork unitOfWork;
+
+        public AuctionRepository(UnitOfWork unitOfWork)
         {
-            throw new NotImplementedException();
+            this.unitOfWork = unitOfWork;
         }
 
-        public Task<Auction> FindByAsync(Guid Id)
+        public async Task AddAsync(Auction auction)
         {
-            throw new NotImplementedException();
+            await unitOfWork.Auctions.AddAsync(auction);
+        }
+
+        public async Task<Auction> FindByAsync(Guid Id)
+        {
+            return await unitOfWork.Auctions.SingleAsync(a => a.Id == Id);
         }
     }
 }

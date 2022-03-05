@@ -25,6 +25,10 @@ namespace AuctionHouse.Domain.Auction
             EndsAt = endsAt;
         }
 
+        private Auction()
+        {
+        }
+
         private Money StartingPrice { get; set; }
         private WinningBid WinningBid { get; set; }
         private DateTime EndsAt { get; set; }

@@ -8,7 +8,7 @@ namespace AuctionHouse.Domain.Auction
 {
     public sealed record Money : ValueObject<Money>
     {
-        private readonly decimal value;
+        private decimal Value { get; }
 
         public Money()
             : this(0m)
@@ -23,32 +23,32 @@ namespace AuctionHouse.Domain.Auction
             if (value < 0)
                 throw new MoneyCannotBeANegativeValueException();
 
-            this.value = value;
+            this.Value = value;
         }
 
         internal Money Add(Money money)
         {
-            return new Money(value + money.value);
+            return new Money(Value + money.Value);
         }
 
         internal bool IsGreaterThan(Money money)
         {
-            return this.value > money.value;
+            return this.Value > money.Value;
         }
 
         internal bool IsGreaterThanOrEqualTo(Money money)
         {
-            return this.value > money.value || this.Equals(money);
+            return this.Value > money.Value || this.Equals(money);
         }
 
         internal bool IsLessThanOrEqualTo(Money money)
         {
-            return this.value < money.value || this.Equals(money);
+            return this.Value < money.Value || this.Equals(money);
         }
 
         public override string ToString()
         {
-            return string.Format("{0}", value);
+            return string.Format("{0}", Value);
         }
     }
 }

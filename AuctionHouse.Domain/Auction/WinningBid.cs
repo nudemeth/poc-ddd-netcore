@@ -8,7 +8,11 @@ namespace AuctionHouse.Domain.Auction
 {
     public record WinningBid : ValueObject<WinningBid>
     {
-        internal WinningBid(Guid bidder, Money maximumBid, Money bid, DateTime timeOfBid)
+        private WinningBid()
+        {
+        }
+
+        public WinningBid(Guid bidder, Money maximumBid, Money bid, DateTime timeOfBid)
         {
             if (bidder == Guid.Empty)
                 throw new ArgumentNullException("Bidder cannot be null");
@@ -25,12 +29,12 @@ namespace AuctionHouse.Domain.Auction
             CurrentAuctionPrice = new Price(bid);
         }
 
-        internal Guid Bidder { get; private set; }
-        internal Money MaximumBid { get; private set; }
-        internal DateTime TimeOfBid { get; private set; }
-        internal Price CurrentAuctionPrice { get; private set; }
+        public Guid Bidder { get; private set; }
+        public Money MaximumBid { get; private set; }
+        public DateTime TimeOfBid { get; private set; }
+        public Price CurrentAuctionPrice { get; private set; }
 
-        internal WinningBid RaiseMaximumBidTo(Money newAmount)
+        public WinningBid RaiseMaximumBidTo(Money newAmount)
         {
             if (newAmount.IsGreaterThan(MaximumBid))
                 return new WinningBid(Bidder, newAmount, CurrentAuctionPrice.Amount, DateTime.Now);
@@ -38,17 +42,17 @@ namespace AuctionHouse.Domain.Auction
                 throw new ApplicationException("Maximum bid increase must be larger than current maximum bid.");
         }
 
-        internal bool WasMadeBy(Guid bidder)
+        public bool WasMadeBy(Guid bidder)
         {
             return Bidder.Equals(bidder);
         }
 
-        internal bool CanBeExceededBy(Money offer)
+        public bool CanBeExceededBy(Money offer)
         {
             return CurrentAuctionPrice.CanBeExceededBy(offer);
         }
 
-        internal bool HasNotReachedMaximumBid()
+        public bool HasNotReachedMaximumBid()
         {
             return MaximumBid.IsGreaterThan(CurrentAuctionPrice.Amount);
         }
