@@ -16,6 +16,6 @@ namespace AuctionHouse.Infrastructure.Queries
         {
         }
 
-        protected override string Command => "SELECT bidder_id, bid, time_of_bid FROM bid_history WHERE auction_id = @AuctionId ORDER BY bid DESC, time_of_bid ASC";
+        protected override string Command => "SELECT id, current_price, bidder_member_id as winning_bidder_id, auction_ends FROM auction WHERE id = @AuctionId";
     }
 }

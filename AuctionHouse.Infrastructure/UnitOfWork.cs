@@ -33,7 +33,7 @@ namespace AuctionHouse.Infrastructure
         {
             try
             {
-                await this.SaveChangesAsync();
+                var affected = await this.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException ex)
             {

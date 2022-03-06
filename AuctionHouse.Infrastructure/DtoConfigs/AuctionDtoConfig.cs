@@ -18,7 +18,7 @@ namespace AuctionHouse.Infrastructure.DtoConfigs
 
             builder.Property(t => t.AuctionId).HasColumnName("id");
             builder.Property(t => t.AuctionEnds).HasColumnName("auction_ends");
-            builder.Property(t => t.BidderMemberId).HasColumnName("bidder_memeber_id");
+            builder.Property(t => t.BidderMemberId).HasColumnName("bidder_member_id");
             builder.Property(t => t.CurrentPrice).HasColumnName("current_price");
             builder.Property(t => t.MaximumBid).HasColumnName("maximum_bid");
             builder.Property(t => t.NextBidIncrement).HasColumnName("next_bid_increment");

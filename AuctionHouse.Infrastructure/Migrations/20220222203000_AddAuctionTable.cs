@@ -18,7 +18,7 @@ namespace AuctionHouse.Infrastructure.Migrations
                 {
                     id = table.Column<Guid>(nullable: false),
                     auction_ends = table.Column<DateTime>(nullable: false),
-                    bidder_memeber_id = table.Column<string>(),
+                    bidder_member_id = table.Column<string>(),
                     current_price = table.Column<decimal>(),
                     maximum_bid = table.Column<decimal>(),
                     next_bid_increment = table.Column<decimal>(),
