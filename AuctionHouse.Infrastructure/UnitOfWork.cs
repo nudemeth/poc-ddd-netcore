@@ -41,11 +41,11 @@ namespace AuctionHouse.Infrastructure
             }
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        /*protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.ApplyConfiguration(new AuctionDtoConfig());
-            modelBuilder.ApplyConfiguration(new AuctionConfig());
-            modelBuilder.ApplyConfiguration(new BidHistoryDtoConfig());
-        }
+            //modelBuilder.ApplyConfiguration(new AuctionConfig());
+            //modelBuilder.ApplyConfiguration(new BidHistoryDtoConfig());
+        }*/
     }
 }
