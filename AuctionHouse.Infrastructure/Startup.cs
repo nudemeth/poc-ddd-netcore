@@ -42,7 +42,6 @@ namespace AuctionHouse.Infrastructure
         {
             using var scope = provider.CreateAsyncScope();
             using var context = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
-            await context.Database.EnsureCreatedAsync();
             await context.Database.MigrateAsync();
 
             return provider;

@@ -29,10 +29,10 @@ namespace AuctionHouse.Domain.BidHistory
             TimeOfBid = timeOfBid;
         }
 
-        internal Guid AuctionId { get; private set; }
-        internal Guid Bidder { get; private set; }
-        internal Money AmountBid { get; private set; }
-        internal DateTime TimeOfBid { get; private set; }
-        internal Guid Id { get; set; }
+        public Guid AuctionId { get; private set; }
+        public Guid Bidder { get; private set; }
+        public Money AmountBid { get; private set; }
+        public DateTime TimeOfBid { get; private set; }
+        public Guid Id { get; set; }
     }
 }
