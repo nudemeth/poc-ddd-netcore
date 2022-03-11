@@ -9,13 +9,17 @@ namespace AuctionHouse.Domain.BidHistory
 {
     public record Bid : ValueObject<Bid>
     {
-        public Bid(Guid auctionId, Guid bidderId, Money amountBid, DateTime timeOfBid)
+        private Bid()
+        {
+        }
+
+        public Bid(Guid auctionId, Guid bidder, Money amountBid, DateTime timeOfBid)
         {
             if (auctionId == Guid.Empty)
                 throw new ArgumentNullException(nameof(auctionId));
 
-            if (bidderId == Guid.Empty)
-                throw new ArgumentNullException(nameof(bidderId));
+            if (bidder == Guid.Empty)
+                throw new ArgumentNullException(nameof(bidder));
 
             if (amountBid == null)
                 throw new ArgumentNullException(nameof(amountBid));
@@ -24,7 +28,7 @@ namespace AuctionHouse.Domain.BidHistory
                 throw new ArgumentNullException(nameof(timeOfBid));
 
             AuctionId = auctionId;
-            Bidder = bidderId;
+            Bidder = bidder;
             AmountBid = amountBid;
             TimeOfBid = timeOfBid;
         }

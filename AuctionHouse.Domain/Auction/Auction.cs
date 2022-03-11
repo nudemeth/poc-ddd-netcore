@@ -30,7 +30,7 @@ namespace AuctionHouse.Domain.Auction
         }
 
         private Money StartingPrice { get; set; }
-        private WinningBid WinningBid { get; set; }
+        private WinningBid? WinningBid { get; set; }
         private DateTime EndsAt { get; set; }
 
         private bool StillInProgress(DateTime currentTime)
