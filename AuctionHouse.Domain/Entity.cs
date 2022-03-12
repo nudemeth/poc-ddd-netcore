@@ -4,6 +4,6 @@
         where TId : struct
     {
         public TId Id { get; protected set; }
-        public int Version { get; private set; }
+        public long Version { get; private set; }
     }
 }

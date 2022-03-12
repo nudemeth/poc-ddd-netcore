@@ -28,9 +28,9 @@ namespace AuctionHouse.Infrastructure
                     builder.UseNpgsql(configuration.GetConnectionString("default"));
                 })
                 .AddTransient<IDbConnection>(s => new NpgsqlConnection(configuration.GetConnectionString("default")))
+                .AddScoped<IUnitOfWork>(s => s.GetRequiredService<UnitOfWork>())
                 .AddScoped<IAuctionRepository, AuctionRepository>()
                 .AddScoped<IBidHistoryRepository, BidHistoryRepository>()
-                .AddScoped<IUnitOfWork, UnitOfWork>()
                 .AddScoped<IClock, SystemClock>()
                 .AddScoped<IDataQueryable<AuctionStatusQueryResponse>, AuctionStatusQuery>()
                 .AddScoped<IDataQueryable<BidHistoryQueryResponse>, BidHistoryQuery>();
