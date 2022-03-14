@@ -92,7 +92,8 @@ namespace AuctionHouse.Infrastructure.Migrations
                     b.OwnsOne("AuctionHouse.Domain.Auction.WinningBid", "WinningBid", b1 =>
                         {
                             b1.Property<Guid>("AuctionId")
-                                .HasColumnType("uuid");
+                                .HasColumnType("uuid")
+                                .HasColumnName("auction_id");
 
                             b1.Property<Guid>("Bidder")
                                 .HasColumnType("uuid")

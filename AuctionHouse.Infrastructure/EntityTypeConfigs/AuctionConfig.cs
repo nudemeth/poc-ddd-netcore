@@ -24,6 +24,7 @@ namespace AuctionHouse.Infrastructure.EntityTypeConfigs
             {
                 aa.ToTable("winning_bid");
 
+                aa.Property("AuctionId").HasColumnName("auction_id");
                 aa.Property("Bidder").HasColumnName("bidder_member_id");
                 aa.OwnsOne(typeof(Price), "CurrentAuctionPrice", bb => bb.OwnsOne(typeof(Money), "Amount", cc => cc.Property("Value").HasColumnName("current_price")));
                 aa.OwnsOne(typeof(Money), "MaximumBid", bb => bb.Property("Value").HasColumnName("maximum_bid"));

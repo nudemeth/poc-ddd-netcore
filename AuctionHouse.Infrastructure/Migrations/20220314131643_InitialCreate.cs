@@ -44,7 +44,7 @@ namespace AuctionHouse.Infrastructure.Migrations
                 name: "winning_bid",
                 columns: table => new
                 {
-                    AuctionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    auction_id = table.Column<Guid>(type: "uuid", nullable: false),
                     bidder_member_id = table.Column<Guid>(type: "uuid", nullable: false),
                     maximum_bid = table.Column<decimal>(type: "numeric", nullable: false),
                     time_of_bid = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -52,10 +52,10 @@ namespace AuctionHouse.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_winning_bid", x => x.AuctionId);
+                    table.PrimaryKey("PK_winning_bid", x => x.auction_id);
                     table.ForeignKey(
-                        name: "FK_winning_bid_auction_AuctionId",
-                        column: x => x.AuctionId,
+                        name: "FK_winning_bid_auction_auction_id",
+                        column: x => x.auction_id,
                         principalTable: "auction",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);

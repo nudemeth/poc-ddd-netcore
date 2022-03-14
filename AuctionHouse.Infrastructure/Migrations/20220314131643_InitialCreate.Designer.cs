@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AuctionHouse.Infrastructure.Migrations
 {
     [DbContext(typeof(UnitOfWork))]
-    [Migration("20220312101214_InitialCreate")]
+    [Migration("20220314131643_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,7 +94,8 @@ namespace AuctionHouse.Infrastructure.Migrations
                     b.OwnsOne("AuctionHouse.Domain.Auction.WinningBid", "WinningBid", b1 =>
                         {
                             b1.Property<Guid>("AuctionId")
-                                .HasColumnType("uuid");
+                                .HasColumnType("uuid")
+                                .HasColumnName("auction_id");
 
                             b1.Property<Guid>("Bidder")
                                 .HasColumnType("uuid")

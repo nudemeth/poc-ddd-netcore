@@ -16,6 +16,10 @@ namespace AuctionHouse.Infrastructure.Queries
         {
         }
 
-        protected override string Command => "SELECT id, current_price, bidder_member_id as winning_bidder_id, auction_ends FROM auction WHERE id = @AuctionId";
+        protected override string Command =>
+            "SELECT a.id as Id, wb.current_price as CurrentPrice, wb.bidder_member_id as WinningBidderId, a.auction_ends as AuctionEnds " +
+            "FROM auction a " +
+            "LEFT OUTER JOIN winning_bid wb ON a.id = wb.auction_id " +
+            "WHERE a.id = @AuctionId";
     }
 }
