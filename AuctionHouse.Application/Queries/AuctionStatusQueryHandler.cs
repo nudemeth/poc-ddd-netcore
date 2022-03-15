@@ -24,11 +24,11 @@ namespace AuctionHouse.Application.Queries
 
         public async Task<AuctionStatusQueryResponse> Handle(AuctionStatusQueryRequest request, CancellationToken cancellationToken)
         {
-            //var numberOfBids = await bidHistoryRepository.NoOfBidsForAsync(request.AuctionId);
+            var numberOfBids = await bidHistoryRepository.NoOfBidsForAsync(request.AuctionId);
             var response = await queryable.ExecuteQueryAsync<AuctionData>(
                 new Dictionary<string, object> { { "@AuctionId", request.AuctionId } },
                 data => data
-                    .Select(d => new AuctionStatusQueryResponse(d.Id, d.CurrentPrice, d.AuctionEnds, d.WinningBidderId, 0, clock.Time()))
+                    .Select(d => new AuctionStatusQueryResponse(d.Id, d.CurrentPrice, d.AuctionEnds, d.WinningBidderId, numberOfBids, clock.Time()))
                     .SingleOrDefault() ?? throw new NotFoundException($"The auction cannot be found: AuctionId = {request.AuctionId}"));
 
             return response;
@@ -37,9 +37,9 @@ namespace AuctionHouse.Application.Queries
         public record AuctionData
         {
             public Guid Id { get; init; }
-            public decimal CurrentPrice { get; init; }
+            public decimal? CurrentPrice { get; init; }
             public DateTime AuctionEnds { get; init; }
-            public Guid WinningBidderId { get; init; }
+            public Guid? WinningBidderId { get; init; }
         }
     }
 }

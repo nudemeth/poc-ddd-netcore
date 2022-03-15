@@ -10,6 +10,6 @@ namespace AuctionHouse.Domain.BidHistory
     public interface IBidHistoryRepository
     {
         Task<int> NoOfBidsForAsync(Guid autionId);
-        void Add(Bid bid);
+        Task AddAsync(Bid bid);
     }
 }

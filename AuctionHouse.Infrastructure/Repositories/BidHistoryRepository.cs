@@ -1,4 +1,6 @@
-﻿using AuctionHouse.Domain.BidHistory;
+﻿using AuctionHouse.Application;
+using AuctionHouse.Domain.BidHistory;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +11,21 @@ namespace AuctionHouse.Infrastructure.Repositories
 {
     public class BidHistoryRepository : IBidHistoryRepository
     {
-        public void Add(Bid bid)
+        private readonly UnitOfWork unitOfWork;
+
+        public BidHistoryRepository(UnitOfWork unitOfWork)
         {
-            throw new NotImplementedException();
+            this.unitOfWork = unitOfWork;
         }
 
-        public Task<int> NoOfBidsForAsync(Guid autionId)
+        public async Task AddAsync(Bid bid)
         {
-            throw new NotImplementedException();
+            await unitOfWork.BidHistory.AddAsync(bid);
+        }
+
+        public async Task<int> NoOfBidsForAsync(Guid autionId)
+        {
+            return await unitOfWork.BidHistory.CountAsync(bh => bh.AuctionId == autionId);
         }
     }
 }

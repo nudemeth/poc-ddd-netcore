@@ -52,11 +52,11 @@ namespace AuctionHouse.Application.Commands
 
         private Action<BidPlacedEvent> BidPlaced()
         {
-            return (BidPlacedEvent e) =>
+            return async (BidPlacedEvent e) =>
             {
                 var bidEvent = new Bid(e.AuctionId, e.Bidder, e.AmountBid, e.TimeOfBid);
 
-                bidHistoryRepository.Add(bidEvent);
+                await bidHistoryRepository.AddAsync(bidEvent);
             };
         }
 
