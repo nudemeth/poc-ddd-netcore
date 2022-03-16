@@ -7,6 +7,7 @@ using AuctionHouse.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,10 @@ namespace AuctionHouse.Infrastructure
                 .AddEntityFrameworkNpgsql()
                 .AddDbContext<UnitOfWork>(builder =>
                 {
-                    builder.UseNpgsql(configuration.GetConnectionString("default"));
+                    builder
+                    .UseNpgsql(configuration.GetConnectionString("default"))
+                    .EnableSensitiveDataLogging()
+                    .LogTo(Console.WriteLine);
                 })
                 .AddTransient<IDbConnection>(s => new NpgsqlConnection(configuration.GetConnectionString("default")))
                 .AddScoped<IUnitOfWork>(s => s.GetRequiredService<UnitOfWork>())

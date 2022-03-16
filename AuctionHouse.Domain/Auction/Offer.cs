@@ -8,7 +8,7 @@ namespace AuctionHouse.Domain.Auction
 {
     public record Offer : ValueObject<Offer>
     {
-        public Offer(Guid bidderId, Money maximumBid, DateTime timeOfOffer)
+        public Offer(Guid bidderId, Money maximumBid, DateTimeOffset timeOfOffer)
         {
             if (bidderId == Guid.Empty)
                 throw new ArgumentNullException("BidderId cannot be null");
@@ -16,7 +16,7 @@ namespace AuctionHouse.Domain.Auction
             if (maximumBid == null)
                 throw new ArgumentNullException("MaximumBid cannot be null");
 
-            if (timeOfOffer == DateTime.MinValue)
+            if (timeOfOffer == DateTimeOffset.MinValue)
                 throw new ArgumentNullException("Time of Offer must have a value");
 
             Bidder = bidderId;
@@ -26,6 +26,6 @@ namespace AuctionHouse.Domain.Auction
 
         internal Guid Bidder { get; private set; }
         internal Money MaximumBid { get; private set; }
-        internal DateTime TimeOfOffer { get; private set; }
+        internal DateTimeOffset TimeOfOffer { get; private set; }
     }
 }

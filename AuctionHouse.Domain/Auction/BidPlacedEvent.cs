@@ -8,7 +8,7 @@ namespace AuctionHouse.Domain.Auction
 {
     public class BidPlacedEvent
     {
-        public BidPlacedEvent(Guid auctionId, Guid bidderId, Money amountBid, DateTime timeOfBid)
+        public BidPlacedEvent(Guid auctionId, Guid bidderId, Money amountBid, DateTimeOffset timeOfBid)
         {
             if (auctionId == Guid.Empty)
                 throw new ArgumentNullException(nameof(auctionId));
@@ -19,7 +19,7 @@ namespace AuctionHouse.Domain.Auction
             if (amountBid == null)
                 throw new ArgumentNullException(nameof(amountBid));
 
-            if (timeOfBid == DateTime.MinValue)
+            if (timeOfBid == DateTimeOffset.MinValue)
                 throw new ArgumentNullException(nameof(timeOfBid));
 
             AuctionId = auctionId;
@@ -31,6 +31,6 @@ namespace AuctionHouse.Domain.Auction
         public Guid AuctionId { get; private set; }
         public Guid Bidder { get; private set; }
         public Money AmountBid { get; private set; }
-        public DateTime TimeOfBid { get; private set; }
+        public DateTimeOffset TimeOfBid { get; private set; }
     }
 }

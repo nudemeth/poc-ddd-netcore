@@ -34,7 +34,7 @@ namespace AuctionHouse.Application.Queries
         {
             public decimal Bid { get; init; }
             public Guid BidderId { get; init; }
-            public DateTime TimeOfBid { get; init; }
+            public DateTimeOffset TimeOfBid { get; init; }
         }
     }
 }

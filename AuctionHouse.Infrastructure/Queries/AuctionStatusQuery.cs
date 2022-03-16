@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Infrastructure.Queries
 {
-    public class AuctionStatusQuery : PostgreSqlQuery<AuctionStatusQueryResponse>, IDataQueryable<AuctionStatusQueryResponse>
+    public class AuctionStatusQuery : SqlQuery<AuctionStatusQueryResponse>, IDataQueryable<AuctionStatusQueryResponse>
     {
         public AuctionStatusQuery(IDbConnection connection)
             : base(connection)

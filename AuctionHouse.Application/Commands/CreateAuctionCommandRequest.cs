@@ -10,6 +10,6 @@ namespace AuctionHouse.Application.Commands
     public record CreateAuctionCommandRequest : IRequest<CreateAuctionCommandResponse>
     {
         public decimal StartingPrice { get; init; }
-        public DateTime EndsAt { get; init; }
+        public DateTimeOffset EndsAt { get; init; }
     }
 }

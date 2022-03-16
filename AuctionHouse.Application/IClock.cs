@@ -8,6 +8,6 @@ namespace AuctionHouse.Application
 {
     public interface IClock
     {
-        DateTime Time();
+        DateTimeOffset Time();
     }
 }

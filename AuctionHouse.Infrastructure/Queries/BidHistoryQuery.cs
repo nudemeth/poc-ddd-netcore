@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Infrastructure.Queries
 {
-    public class BidHistoryQuery : PostgreSqlQuery<BidHistoryQueryResponse>, IDataQueryable<BidHistoryQueryResponse>
+    public class BidHistoryQuery : SqlQuery<BidHistoryQueryResponse>, IDataQueryable<BidHistoryQueryResponse>
     {
         public BidHistoryQuery(IDbConnection connection)
             : base(connection)

@@ -9,11 +9,11 @@ using Dapper;
 
 namespace AuctionHouse.Infrastructure.Queries
 {
-    public abstract class PostgreSqlQuery<TResult> : IDataQueryable<TResult>
+    public abstract class SqlQuery<TResult> : IDataQueryable<TResult>
     {
         private readonly IDbConnection connection;
 
-        public PostgreSqlQuery(IDbConnection connection)
+        public SqlQuery(IDbConnection connection)
         {
             this.connection = connection;
         }

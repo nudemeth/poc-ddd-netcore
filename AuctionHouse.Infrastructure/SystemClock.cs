@@ -9,9 +9,9 @@ namespace AuctionHouse.Infrastructure
 {
     public class SystemClock : IClock
     {
-        public DateTime Time()
+        public DateTimeOffset Time()
         {
-            return DateTime.Now;
+            return DateTimeOffset.UtcNow;
         }
     }
 }

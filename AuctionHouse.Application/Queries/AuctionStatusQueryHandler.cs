@@ -38,7 +38,7 @@ namespace AuctionHouse.Application.Queries
         {
             public Guid Id { get; init; }
             public decimal? CurrentPrice { get; init; }
-            public DateTime AuctionEnds { get; init; }
+            public DateTimeOffset AuctionEnds { get; init; }
             public Guid? WinningBidderId { get; init; }
         }
     }

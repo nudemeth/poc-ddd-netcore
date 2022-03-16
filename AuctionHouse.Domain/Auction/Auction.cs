@@ -9,7 +9,7 @@ namespace AuctionHouse.Domain.Auction
 {
     public class Auction : Entity<Guid>
     {
-        public Auction(Guid id, Money startingPrice, DateTime endsAt)
+        public Auction(Guid id, Money startingPrice, DateTimeOffset endsAt)
         {
             if (id == Guid.Empty)
                 throw new ArgumentNullException("Auction Id cannot be null");
@@ -17,7 +17,7 @@ namespace AuctionHouse.Domain.Auction
             if (startingPrice == null)
                 throw new ArgumentNullException("Starting Price cannot be null");
 
-            if (endsAt == DateTime.MinValue)
+            if (endsAt == DateTimeOffset.MinValue)
                 throw new ArgumentNullException("EndsAt must have a value");
 
             Id = id;
@@ -31,14 +31,14 @@ namespace AuctionHouse.Domain.Auction
 
         private Money StartingPrice { get; set; }
         private WinningBid? WinningBid { get; set; }
-        private DateTime EndsAt { get; set; }
+        private DateTimeOffset EndsAt { get; set; }
 
-        private bool StillInProgress(DateTime currentTime)
+        private bool StillInProgress(DateTimeOffset currentTime)
         {
             return (EndsAt > currentTime);
         }
 
-        public void PlaceBidFor(Offer offer, DateTime currentTime)
+        public void PlaceBidFor(Offer offer, DateTimeOffset currentTime)
         {
             if (StillInProgress(currentTime))
             {
