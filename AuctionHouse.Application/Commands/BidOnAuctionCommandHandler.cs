@@ -30,16 +30,17 @@ namespace AuctionHouse.Application.Commands
         {
             try
             {
+                var auction = await auctionRepository.FindByAsync(request.AuctionId);
+                var bidAmount = new Money(request.Amount);
+                var now = clock.Time();
+
                 using (DomainEvents.Register(OutBid()))
                 using (DomainEvents.Register(BidPlaced()))
                 {
-                    var auction = await auctionRepository.FindByAsync(request.AuctionId);
-                    var bidAmount = new Money(request.Amount);
-                    var now = clock.Time();
-
                     auction.PlaceBidFor(new Offer(request.MemberId, bidAmount, now), now);
-                    await unitOfWork.SaveAsync();
                 }
+
+                await unitOfWork.SaveAsync();
             }
             catch (ConcurrencyException)
             {

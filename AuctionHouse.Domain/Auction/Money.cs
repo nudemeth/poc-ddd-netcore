@@ -15,6 +15,11 @@ namespace AuctionHouse.Domain.Auction
         {
         }
 
+        public Money(Money money)
+            : base(money)
+        {
+        }
+
         public Money(decimal value)
         {
             if (value % 0.01m != 0)
@@ -26,22 +31,22 @@ namespace AuctionHouse.Domain.Auction
             this.Value = value;
         }
 
-        internal Money Add(Money money)
+        public Money Add(Money money)
         {
             return new Money(Value + money.Value);
         }
 
-        internal bool IsGreaterThan(Money money)
+        public bool IsGreaterThan(Money money)
         {
             return this.Value > money.Value;
         }
 
-        internal bool IsGreaterThanOrEqualTo(Money money)
+        public bool IsGreaterThanOrEqualTo(Money money)
         {
             return this.Value > money.Value || this.Equals(money);
         }
 
-        internal bool IsLessThanOrEqualTo(Money money)
+        public bool IsLessThanOrEqualTo(Money money)
         {
             return this.Value < money.Value || this.Equals(money);
         }

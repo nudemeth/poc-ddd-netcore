@@ -17,7 +17,7 @@ namespace AuctionHouse.Domain.Auction
             if (amount == null)
                 throw new ArgumentNullException("Amount cannot be null");
 
-            Amount = amount;
+            Amount = new Money(amount);
         }
 
         public Money Amount { get; private set; }
