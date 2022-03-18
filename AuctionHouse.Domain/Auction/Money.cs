@@ -18,6 +18,7 @@ namespace AuctionHouse.Domain.Auction
         public Money(Money money)
             : base(money)
         {
+            this.Value = money.Value;
         }
 
         public Money(decimal value)
