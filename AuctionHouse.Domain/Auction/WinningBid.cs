@@ -24,9 +24,9 @@ namespace AuctionHouse.Domain.Auction
                 throw new ArgumentNullException("TimeOfBid must have a value");
 
             Bidder = bidder;
-            MaximumBid = maximumBid;
+            MaximumBid = new Money(maximumBid);
             TimeOfBid = timeOfBid;
-            CurrentAuctionPrice = new Price(bid);
+            CurrentAuctionPrice = new Price(new Money(bid));
         }
 
         public Guid Bidder { get; private set; }

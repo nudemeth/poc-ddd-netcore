@@ -69,7 +69,7 @@ namespace AuctionHouse.Domain.Auction
         private void PlaceABidForTheFirst(Offer offer)
         {
             if (offer.MaximumBid.IsGreaterThanOrEqualTo(StartingPrice))
-                Place(new WinningBid(offer.Bidder, offer.MaximumBid, new Money(StartingPrice), offer.TimeOfOffer));
+                Place(new WinningBid(offer.Bidder, offer.MaximumBid, StartingPrice, offer.TimeOfOffer));
         }
 
         private void Place(WinningBid newBid)
@@ -78,7 +78,7 @@ namespace AuctionHouse.Domain.Auction
                 DomainEvents.Raise(new OutBidEvent(Id, WinningBid.Bidder));
 
             WinningBid = newBid;
-            DomainEvents.Raise(new BidPlacedEvent(Id, newBid.Bidder, new Money(newBid.CurrentAuctionPrice.Amount), newBid.TimeOfBid));
+            DomainEvents.Raise(new BidPlacedEvent(Id, newBid.Bidder, newBid.CurrentAuctionPrice.Amount, newBid.TimeOfBid));
         }
     }
 }
