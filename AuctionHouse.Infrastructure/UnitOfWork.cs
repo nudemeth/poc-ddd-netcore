@@ -36,7 +36,7 @@ namespace AuctionHouse.Infrastructure
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                throw new ConcurrencyException("The data has already been updated by other.", ex);
+                throw new OutDatedDataException("The data has already been updated by other.", ex);
             }
         }
 

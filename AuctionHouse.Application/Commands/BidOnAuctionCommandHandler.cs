@@ -2,7 +2,7 @@
 using AuctionHouse.Domain;
 using AuctionHouse.Domain.Auction;
 using AuctionHouse.Domain.BidHistory;
-using MediatR;
+using MassTransit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Application.Commands
 {
-    public class BidOnAuctionCommandHandler : IRequestHandler<BidOnAuctionCommandRequest>
+    public class BidOnAuctionCommandHandler : IConsumer<BidOnAuctionCommandRequest>
     {
         private readonly IAuctionRepository auctionRepository;
         private readonly IBidHistoryRepository bidHistoryRepository;
@@ -26,29 +26,29 @@ namespace AuctionHouse.Application.Commands
             this.clock = clock;
         }
 
-        public async Task<Unit> Handle(BidOnAuctionCommandRequest request, CancellationToken cancellationToken)
+        public async Task Consume(ConsumeContext<BidOnAuctionCommandRequest> context)
         {
             try
             {
-                var auction = await auctionRepository.FindByAsync(request.AuctionId);
-                var bidAmount = new Money(request.Amount);
+                var auction = await auctionRepository.FindByAsync(context.Message.AuctionId);
+                var bidAmount = new Money(context.Message.Amount);
                 var now = clock.Time();
 
                 using (DomainEvents.Register(OutBid()))
                 using (DomainEvents.Register(BidPlaced()))
                 {
-                    auction.PlaceBidFor(new Offer(request.MemberId, bidAmount, now), now);
+                    auction.PlaceBidFor(new Offer(context.Message.MemberId, bidAmount, now), now);
                 }
 
                 await unitOfWork.SaveAsync();
             }
-            catch (ConcurrencyException)
+            catch (OutDatedDataException)
             {
                 await unitOfWork.ClearAsync();
-                await Handle(request, cancellationToken);
+                await Consume(context);
             }
 
-            return Unit.Value;
+            await context.RespondAsync(new BidOnAuctionCommandResponse());
         }
 
         private Action<BidPlacedEvent> BidPlaced()

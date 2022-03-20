@@ -1,6 +1,6 @@
 ﻿using AuctionHouse.Application.Exception;
 using AuctionHouse.Domain.BidHistory;
-using MediatR;
+using MassTransit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Application.Queries
 {
-    public class AuctionStatusQueryHandler : IRequestHandler<AuctionStatusQueryRequest, AuctionStatusQueryResponse>
+    public class AuctionStatusQueryHandler : IConsumer<AuctionStatusQueryRequest>
     {
         private readonly IDataQueryable<AuctionStatusQueryResponse> queryable;
         private readonly IBidHistoryRepository bidHistoryRepository;
@@ -22,16 +22,16 @@ namespace AuctionHouse.Application.Queries
             this.clock = clock;
         }
 
-        public async Task<AuctionStatusQueryResponse> Handle(AuctionStatusQueryRequest request, CancellationToken cancellationToken)
+        public async Task Consume(ConsumeContext<AuctionStatusQueryRequest> context)
         {
-            var numberOfBids = await bidHistoryRepository.NoOfBidsForAsync(request.AuctionId);
+            var numberOfBids = await bidHistoryRepository.NoOfBidsForAsync(context.Message.AuctionId);
             var response = await queryable.ExecuteQueryAsync<AuctionData>(
-                new Dictionary<string, object> { { "@AuctionId", request.AuctionId } },
+                new Dictionary<string, object> { { "@AuctionId", context.Message.AuctionId } },
                 data => data
                     .Select(d => new AuctionStatusQueryResponse(d.Id, d.CurrentPrice, d.AuctionEnds, d.WinningBidderId, numberOfBids, clock.Time()))
-                    .SingleOrDefault() ?? throw new NotFoundException($"The auction cannot be found: AuctionId = {request.AuctionId}"));
+                    .SingleOrDefault() ?? throw new NotFoundException($"The auction cannot be found: AuctionId = {context.Message.AuctionId}"));
 
-            return response;
+            await context.RespondAsync(response);
         }
 
         public record AuctionData

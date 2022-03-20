@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Application.Exception
 {
-    public class ConcurrencyException : System.Exception
+    public class OutDatedDataException : System.Exception
     {
-        public ConcurrencyException(string message, System.Exception innerException)
+        public OutDatedDataException(string message, System.Exception innerException)
             : base(message, innerException)
         {
         }

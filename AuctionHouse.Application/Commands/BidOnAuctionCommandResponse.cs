@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Application.Commands
 {
-    public record BidOnAuctionCommandRequest
+    public class BidOnAuctionCommandResponse
     {
-        public Guid AuctionId { get; init; }
-        public Guid MemberId { get; init; }
-        public decimal Amount { get; init; }
     }
 }
