@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Domain.Auction
 {
-    public class BidPlacedEvent
+    public record BidPlacedEvent : DomainEvent
     {
         public BidPlacedEvent(Guid auctionId, Guid bidderId, Money amountBid, DateTimeOffset timeOfBid)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Domain.Auction
 {
-    public record OutBidEvent
+    public record OutBidEvent : DomainEvent
     {
         internal OutBidEvent(Guid auctionId, Guid bidderId)
         {

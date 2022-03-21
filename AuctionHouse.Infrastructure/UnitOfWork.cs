@@ -1,5 +1,6 @@
 ﻿using AuctionHouse.Application;
 using AuctionHouse.Application.Exception;
+using AuctionHouse.Domain;
 using AuctionHouse.Domain.Auction;
 using AuctionHouse.Domain.BidHistory;
 using AuctionHouse.Infrastructure.EntityTypeConfigs;
@@ -32,6 +33,7 @@ namespace AuctionHouse.Infrastructure
         {
             try
             {
+                await DispatchDomainEvents();
                 var affected = await this.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException ex)
@@ -44,6 +46,24 @@ namespace AuctionHouse.Infrastructure
         {
             modelBuilder.ApplyConfiguration(new AuctionConfig());
             modelBuilder.ApplyConfiguration(new BidConfig());
+        }
+
+        private Task DispatchDomainEvents()
+        {
+            ChangeTracker.Entries<Entity>()
+                .Where(e => e.Entity.DomainEvents.Any())
+                .ToList()
+                .ForEach(e =>
+                {
+                    e.Entity.DomainEvents.ToList().ForEach(async de =>
+                    {
+                        // publish event
+                    });
+
+                    e.Entity.ClearDomainEvents();
+                });
+
+            return Task.CompletedTask;
         }
     }
 }

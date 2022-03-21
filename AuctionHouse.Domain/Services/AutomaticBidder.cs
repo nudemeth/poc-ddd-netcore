@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuctionHouse.Domain.Service
+namespace AuctionHouse.Domain.Services
 {
     public class AutomaticBidder
     {
