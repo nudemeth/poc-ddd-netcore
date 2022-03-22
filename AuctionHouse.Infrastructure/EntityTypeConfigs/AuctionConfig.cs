@@ -15,6 +15,7 @@ namespace AuctionHouse.Infrastructure.EntityTypeConfigs
         {
             builder.ToTable("auction");
             builder.HasKey("Id");
+            builder.Ignore(e => e.DomainEvents);
 
             builder.Property("Id").HasColumnName("id");
             builder.OwnsOne(typeof(Money), "StartingPrice", aa => aa.Property("Value").HasColumnName("starting_price"));

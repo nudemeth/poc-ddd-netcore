@@ -4,6 +4,7 @@ using AuctionHouse.Domain;
 using AuctionHouse.Domain.Auction;
 using AuctionHouse.Domain.BidHistory;
 using AuctionHouse.Infrastructure.EntityTypeConfigs;
+using MassTransit.Mediator;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,12 @@ namespace AuctionHouse.Infrastructure
 {
     public class UnitOfWork : DbContext, IUnitOfWork
     {
-        public UnitOfWork(DbContextOptions<UnitOfWork> options)
+        private readonly IMediator mediator;
+
+        public UnitOfWork(DbContextOptions<UnitOfWork> options, IMediator mediator)
             : base(options)
         {
+            this.mediator = mediator;
         }
 
         public DbSet<Auction> Auctions { get; set; } = default!;
@@ -57,7 +61,7 @@ namespace AuctionHouse.Infrastructure
                 {
                     e.Entity.DomainEvents.ToList().ForEach(async de =>
                     {
-                        // publish event
+                        await mediator.Publish(de);
                     });
 
                     e.Entity.ClearDomainEvents();

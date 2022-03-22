@@ -33,12 +33,8 @@ namespace AuctionHouse.Application.Commands
                 var auction = await auctionRepository.FindByAsync(context.Message.AuctionId);
                 var bidAmount = new Money(context.Message.Amount);
                 var now = clock.Time();
-
-                using (DomainEvents.Register(OutBid()))
-                using (DomainEvents.Register(BidPlaced()))
-                {
-                    auction.PlaceBidFor(new Offer(context.Message.MemberId, bidAmount, now), now);
-                }
+                
+                auction.PlaceBidFor(new Offer(context.Message.MemberId, bidAmount, now), now);
 
                 await unitOfWork.SaveAsync();
             }
@@ -49,24 +45,6 @@ namespace AuctionHouse.Application.Commands
             }
 
             await context.RespondAsync(new BidOnAuctionCommandResponse());
-        }
-
-        private Action<BidPlacedEvent> BidPlaced()
-        {
-            return async (BidPlacedEvent e) =>
-            {
-                var bidEvent = new Bid(e.AuctionId, e.Bidder, e.AmountBid, e.TimeOfBid);
-
-                await bidHistoryRepository.AddAsync(bidEvent);
-            };
-        }
-
-        private Action<OutBidEvent> OutBid()
-        {
-            return (OutBidEvent e) =>
-            {
-                // Email customer to say that he has been out bid                
-            };
         }
     }
 }
