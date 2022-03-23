@@ -14,14 +14,12 @@ namespace AuctionHouse.Application.Commands
     public class BidOnAuctionCommandHandler : IConsumer<BidOnAuctionCommandRequest>
     {
         private readonly IAuctionRepository auctionRepository;
-        private readonly IBidHistoryRepository bidHistoryRepository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IClock clock;
 
-        public BidOnAuctionCommandHandler(IAuctionRepository auctionRepository, IBidHistoryRepository bidHistoryRepository, IUnitOfWork unitOfWork, IClock clock)
+        public BidOnAuctionCommandHandler(IAuctionRepository auctionRepository, IUnitOfWork unitOfWork, IClock clock)
         {
             this.auctionRepository = auctionRepository;
-            this.bidHistoryRepository = bidHistoryRepository;
             this.unitOfWork = unitOfWork;
             this.clock = clock;
         }
