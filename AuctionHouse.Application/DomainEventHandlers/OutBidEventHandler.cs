@@ -11,10 +11,10 @@ namespace AuctionHouse.Application.DomainEventHandlers
 {
     public class OutBidEventHandler : IConsumer<OutBidEvent>
     {
-        public Task Consume(ConsumeContext<OutBidEvent> context)
+        public async Task Consume(ConsumeContext<OutBidEvent> context)
         {
             // Email customer to say that he has been out bid
-            return Task.CompletedTask;
+            await context.RespondAsync(NoReplyMessage.Instance);
         }
     }
 }
