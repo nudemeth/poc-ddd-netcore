@@ -1,4 +1,5 @@
 ﻿using AuctionHouse.Application.Exception;
+using AuctionHouse.Application.Services;
 using AuctionHouse.Domain.BidHistory;
 using MassTransit;
 using System;

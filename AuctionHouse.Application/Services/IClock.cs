@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuctionHouse.Application
+namespace AuctionHouse.Application.Services
 {
     public interface IClock
     {

@@ -1,4 +1,4 @@
-﻿namespace AuctionHouse.Application
+﻿namespace AuctionHouse.Application.Queries
 {
     public interface IDataQueryable<TResult>
     {

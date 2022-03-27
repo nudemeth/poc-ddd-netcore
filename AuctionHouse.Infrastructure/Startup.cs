@@ -1,9 +1,11 @@
 ﻿using AuctionHouse.Application;
 using AuctionHouse.Application.Queries;
+using AuctionHouse.Application.Services;
 using AuctionHouse.Domain.Auction;
 using AuctionHouse.Domain.BidHistory;
 using AuctionHouse.Infrastructure.Queries;
 using AuctionHouse.Infrastructure.Repositories;
+using AuctionHouse.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

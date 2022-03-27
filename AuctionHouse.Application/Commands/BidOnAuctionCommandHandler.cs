@@ -1,4 +1,5 @@
 ﻿using AuctionHouse.Application.Exception;
+using AuctionHouse.Application.Services;
 using AuctionHouse.Domain;
 using AuctionHouse.Domain.Auction;
 using AuctionHouse.Domain.BidHistory;

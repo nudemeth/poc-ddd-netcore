@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AuctionHouse.Application;
+using AuctionHouse.Application.Queries;
 using Dapper;
 
 namespace AuctionHouse.Infrastructure.Queries
