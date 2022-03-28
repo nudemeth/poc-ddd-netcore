@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Application.DomainEventHandlers
 {
-    public class OutBidEventHandler : IConsumer<OutBidEvent>
+    public class OutBidEventHandler : DomainEventHandler<OutBidEvent>
     {
-        public async Task Consume(ConsumeContext<OutBidEvent> context)
+        protected override Task Handle(OutBidEvent @event)
         {
             // Email customer to say that he has been out bid
-            await context.RespondAsync(NoReplyMessage.Instance);
+            return Task.CompletedTask;
         }
     }
 }

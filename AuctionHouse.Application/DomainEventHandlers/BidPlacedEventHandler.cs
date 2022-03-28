@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Application.DomainEventHandlers
 {
-    public class BidPlacedEventHandler : IConsumer<BidPlacedEvent>
+    public class BidPlacedEventHandler : DomainEventHandler<BidPlacedEvent>
     {
         private IBidHistoryRepository bidHistoryRepository;
 
@@ -19,13 +19,10 @@ namespace AuctionHouse.Application.DomainEventHandlers
             this.bidHistoryRepository = bidHistoryRepository;
         }
 
-        public async Task Consume(ConsumeContext<BidPlacedEvent> context)
+        protected override async Task Handle(BidPlacedEvent @event)
         {
-            var domainEvent = context.Message;
-            var bidEvent = new Bid(domainEvent.AuctionId, domainEvent.Bidder, domainEvent.AmountBid, domainEvent.TimeOfBid);
+            var bidEvent = new Bid(@event.AuctionId, @event.Bidder, @event.AmountBid, @event.TimeOfBid);
             await bidHistoryRepository.AddAsync(bidEvent);
-
-            await context.RespondAsync(NoReplyMessage.Instance);
         }
     }
 }
