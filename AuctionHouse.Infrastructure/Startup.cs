@@ -26,7 +26,7 @@ namespace AuctionHouse.Infrastructure
         {
             services
                 .AddEntityFrameworkNpgsql()
-                .AddDbContext<UnitOfWork>(builder =>
+                .AddDbContextFactory<DataContext>(builder =>
                 {
                     builder
                     .UseNpgsql(configuration.GetConnectionString("default"))
@@ -47,7 +47,7 @@ namespace AuctionHouse.Infrastructure
         public static async Task<IServiceProvider> UseInfrastructure(this IServiceProvider provider, IConfiguration configuration)
         {
             using var scope = provider.CreateAsyncScope();
-            using var context = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
+            using var context = scope.ServiceProvider.GetRequiredService<DataContext>();
             await context.Database.MigrateAsync();
 
             return provider;
