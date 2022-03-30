@@ -11,21 +11,21 @@ namespace AuctionHouse.Infrastructure.Repositories
 {
     public class AuctionRepository : IAuctionRepository
     {
-        private readonly DataContext dataContext;
+        private readonly UnitOfWork unitOfWork;
 
-        public AuctionRepository(DataContext dataContext)
+        public AuctionRepository(UnitOfWork unitOfWork)
         {
-            this.dataContext = dataContext;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task AddAsync(Auction auction)
         {
-            await dataContext.Auctions.AddAsync(auction);
+            await unitOfWork.Auctions.AddAsync(auction);
         }
 
         public async Task<Auction> FindByAsync(Guid Id)
         {
-            return await dataContext.Auctions.SingleAsync(a => a.Id == Id);
+            return await unitOfWork.Auctions.SingleAsync(a => a.Id == Id);
         }
     }
 }

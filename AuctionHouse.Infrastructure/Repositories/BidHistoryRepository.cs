@@ -11,21 +11,21 @@ namespace AuctionHouse.Infrastructure.Repositories
 {
     public class BidHistoryRepository : IBidHistoryRepository
     {
-        private readonly DataContext dataContext;
+        private readonly UnitOfWork unitOfWork;
 
-        public BidHistoryRepository(DataContext dataContext)
+        public BidHistoryRepository(UnitOfWork unitOfWork)
         {
-            this.dataContext = dataContext;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task AddAsync(Bid bid)
         {
-            await dataContext.BidHistory.AddAsync(bid);
+            await unitOfWork.BidHistory.AddAsync(bid);
         }
 
         public async Task<int> NoOfBidsForAsync(Guid autionId)
         {
-            return await dataContext.BidHistory.CountAsync(bh => bh.AuctionId == autionId);
+            return await unitOfWork.BidHistory.CountAsync(bh => bh.AuctionId == autionId);
         }
     }
 }
