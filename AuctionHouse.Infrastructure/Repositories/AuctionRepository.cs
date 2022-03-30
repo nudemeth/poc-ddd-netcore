@@ -20,12 +20,12 @@ namespace AuctionHouse.Infrastructure.Repositories
 
         public async Task AddAsync(Auction auction)
         {
-            await unitOfWork.Auctions.AddAsync(auction);
+            await unitOfWork.DataContext.Auctions.AddAsync(auction);
         }
 
         public async Task<Auction> FindByAsync(Guid Id)
         {
-            return await unitOfWork.Auctions.SingleAsync(a => a.Id == Id);
+            return await unitOfWork.DataContext.Auctions.SingleAsync(a => a.Id == Id);
         }
     }
 }

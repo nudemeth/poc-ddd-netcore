@@ -15,22 +15,34 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Infrastructure
 {
-    public class UnitOfWork : DbContext, IUnitOfWork
+    public sealed class UnitOfWork : IUnitOfWork, IDisposable, IAsyncDisposable
     {
+        private readonly IDbContextFactory<DataContext> dbContextFactory;
         private readonly IMediator mediator;
-
-        public UnitOfWork(DbContextOptions<UnitOfWork> options, IMediator mediator)
-            : base(options)
+        
+        public UnitOfWork(IDbContextFactory<DataContext> dbContextFactory, IMediator mediator)
         {
+            this.dbContextFactory = dbContextFactory;
             this.mediator = mediator;
+            this.DataContext = dbContextFactory.CreateDbContext();
         }
 
-        public DbSet<Auction> Auctions { get; set; } = default!;
-        public DbSet<Bid> BidHistory { get; set; } = default!;
+        public DataContext DataContext { get; private set; }
 
-        public Task ClearAsync()
+        public void Dispose()
         {
-            throw new NotImplementedException();
+            DataContext.Dispose();
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await DataContext.DisposeAsync();
+        }
+
+        public async Task ClearAsync()
+        {
+            await DataContext.DisposeAsync();
+            DataContext = dbContextFactory.CreateDbContext();
         }
 
         public async Task SaveAsync()
@@ -38,7 +50,7 @@ namespace AuctionHouse.Infrastructure
             try
             {
                 await DispatchDomainEvents();
-                var affected = await this.SaveChangesAsync();
+                var affected = await DataContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException ex)
             {
@@ -46,15 +58,9 @@ namespace AuctionHouse.Infrastructure
             }
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfiguration(new AuctionConfig());
-            modelBuilder.ApplyConfiguration(new BidConfig());
-        }
-
         private Task DispatchDomainEvents()
         {
-            ChangeTracker.Entries<Entity>()
+            DataContext.ChangeTracker.Entries<Entity>()
                 .Where(e => e.Entity.DomainEvents.Any())
                 .ToList()
                 .ForEach(e =>

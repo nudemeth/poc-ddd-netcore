@@ -26,14 +26,15 @@ namespace AuctionHouse.Infrastructure
         {
             services
                 .AddEntityFrameworkNpgsql()
-                .AddDbContext<UnitOfWork>(builder =>
+                .AddDbContextFactory<DataContext>(builder =>
                 {
                     builder
-                    .UseNpgsql(configuration.GetConnectionString("default"))
-                    .EnableSensitiveDataLogging()
-                    .LogTo(Console.WriteLine);
+                        .UseNpgsql(configuration.GetConnectionString("default"))
+                        .EnableSensitiveDataLogging()
+                        .LogTo(Console.WriteLine);
                 })
                 .AddTransient<IDbConnection>(s => new NpgsqlConnection(configuration.GetConnectionString("default")))
+                .AddScoped<UnitOfWork>()
                 .AddScoped<IUnitOfWork>(s => s.GetRequiredService<UnitOfWork>())
                 .AddScoped<IAuctionRepository, AuctionRepository>()
                 .AddScoped<IBidHistoryRepository, BidHistoryRepository>()
@@ -46,8 +47,7 @@ namespace AuctionHouse.Infrastructure
 
         public static async Task<IServiceProvider> UseInfrastructure(this IServiceProvider provider, IConfiguration configuration)
         {
-            using var scope = provider.CreateAsyncScope();
-            using var context = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
+            using var context = await provider.GetRequiredService<IDbContextFactory<DataContext>>().CreateDbContextAsync();
             await context.Database.MigrateAsync();
 
             return provider;

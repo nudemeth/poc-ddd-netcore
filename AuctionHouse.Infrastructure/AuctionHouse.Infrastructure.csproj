@@ -21,8 +21,4 @@
     <ProjectReference Include="..\AuctionHouse.Application\AuctionHouse.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

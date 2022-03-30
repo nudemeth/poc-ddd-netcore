@@ -16,7 +16,7 @@ namespace AuctionHouse.Infrastructure.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     starting_price = table.Column<decimal>(type: "numeric", nullable: false),
-                    auction_ends = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    auction_ends = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     version = table.Column<long>(type: "bigint", rowVersion: true, nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityAlwaysColumn)
                 },
@@ -33,7 +33,7 @@ namespace AuctionHouse.Infrastructure.Migrations
                     auction_id = table.Column<Guid>(type: "uuid", nullable: false),
                     bidder_id = table.Column<Guid>(type: "uuid", nullable: false),
                     bid = table.Column<decimal>(type: "numeric", nullable: false),
-                    time_of_bid = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    time_of_bid = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,7 +47,7 @@ namespace AuctionHouse.Infrastructure.Migrations
                     auction_id = table.Column<Guid>(type: "uuid", nullable: false),
                     bidder_member_id = table.Column<Guid>(type: "uuid", nullable: false),
                     maximum_bid = table.Column<decimal>(type: "numeric", nullable: false),
-                    time_of_bid = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    time_of_bid = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     current_price = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>

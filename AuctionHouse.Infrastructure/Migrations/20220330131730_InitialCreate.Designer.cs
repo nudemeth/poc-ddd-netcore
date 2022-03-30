@@ -3,6 +3,7 @@ using System;
 using AuctionHouse.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,10 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AuctionHouse.Infrastructure.Migrations
 {
-    [DbContext(typeof(UnitOfWork))]
-    partial class UnitOfWorkModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DataContext))]
+    [Migration("20220330131730_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,7 +31,7 @@ namespace AuctionHouse.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<DateTime>("EndsAt")
+                    b.Property<DateTimeOffset>("EndsAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("auction_ends");
 
@@ -61,7 +63,7 @@ namespace AuctionHouse.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("bidder_id");
 
-                    b.Property<DateTime>("TimeOfBid")
+                    b.Property<DateTimeOffset>("TimeOfBid")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("time_of_bid");
 
@@ -99,7 +101,7 @@ namespace AuctionHouse.Infrastructure.Migrations
                                 .HasColumnType("uuid")
                                 .HasColumnName("bidder_member_id");
 
-                            b1.Property<DateTime>("TimeOfBid")
+                            b1.Property<DateTimeOffset>("TimeOfBid")
                                 .HasColumnType("timestamp with time zone")
                                 .HasColumnName("time_of_bid");
 
