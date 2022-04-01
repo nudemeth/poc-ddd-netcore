@@ -27,23 +27,27 @@ namespace AuctionHouse.Application.Commands
 
         public async Task Consume(ConsumeContext<BidOnAuctionCommandRequest> context)
         {
+            await Handle(context.Message);
+            await context.RespondAsync(new BidOnAuctionCommandResponse());
+        }
+
+        private async Task Handle(BidOnAuctionCommandRequest request)
+        {
             try
             {
-                var auction = await auctionRepository.FindByAsync(context.Message.AuctionId);
-                var bidAmount = new Money(context.Message.Amount);
+                var auction = await auctionRepository.FindByAsync(request.AuctionId);
+                var bidAmount = new Money(request.Amount);
                 var now = clock.Time();
-                
-                auction.PlaceBidFor(new Offer(context.Message.MemberId, bidAmount, now), now);
+
+                auction.PlaceBidFor(new Offer(request.MemberId, bidAmount, now), now);
 
                 await unitOfWork.SaveAsync();
             }
             catch (OutDatedDataException)
             {
                 await unitOfWork.ClearAsync();
-                await Consume(context);
+                await Handle(request);
             }
-
-            await context.RespondAsync(new BidOnAuctionCommandResponse());
         }
     }
 }
