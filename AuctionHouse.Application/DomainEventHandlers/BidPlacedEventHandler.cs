@@ -24,7 +24,6 @@ namespace AuctionHouse.Application.DomainEventHandlers
             var @event = context.Message;
             var bidEvent = new Bid(@event.AuctionId, @event.Bidder, @event.AmountBid, @event.TimeOfBid);
             await bidHistoryRepository.AddAsync(bidEvent);
-            await context.RespondAsync(NoReplyMessage.Instance);
         }
     }
 }
