@@ -12,7 +12,6 @@ namespace AuctionHouse.Domain
         }
         
         public Guid Id { get; protected set; }
-        public long Version { get; private set; }
         public IReadOnlyCollection<DomainEvent> DomainEvents => new ReadOnlyCollection<DomainEvent>(domainEvents);
 
         public void AddDomainEvent(DomainEvent domainEvent)

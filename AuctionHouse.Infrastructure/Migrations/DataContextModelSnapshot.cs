@@ -33,14 +33,6 @@ namespace AuctionHouse.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("auction_ends");
 
-                    b.Property<long>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bigint")
-                        .HasColumnName("version");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Version"));
-
                     b.HasKey("Id");
 
                     b.ToTable("auction", (string)null);
@@ -102,6 +94,14 @@ namespace AuctionHouse.Infrastructure.Migrations
                             b1.Property<DateTimeOffset>("TimeOfBid")
                                 .HasColumnType("timestamp with time zone")
                                 .HasColumnName("time_of_bid");
+
+                            b1.Property<long>("Version")
+                                .IsConcurrencyToken()
+                                .ValueGeneratedOnAddOrUpdate()
+                                .HasColumnType("bigint")
+                                .HasColumnName("version");
+
+                            NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b1.Property<long>("Version"));
 
                             b1.HasKey("AuctionId");
 

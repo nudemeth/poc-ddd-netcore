@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AuctionHouse.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220330131730_InitialCreate")]
+    [Migration("20220406132903_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,14 +34,6 @@ namespace AuctionHouse.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("EndsAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("auction_ends");
-
-                    b.Property<long>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bigint")
-                        .HasColumnName("version");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Version"));
 
                     b.HasKey("Id");
 
@@ -104,6 +96,14 @@ namespace AuctionHouse.Infrastructure.Migrations
                             b1.Property<DateTimeOffset>("TimeOfBid")
                                 .HasColumnType("timestamp with time zone")
                                 .HasColumnName("time_of_bid");
+
+                            b1.Property<long>("Version")
+                                .IsConcurrencyToken()
+                                .ValueGeneratedOnAddOrUpdate()
+                                .HasColumnType("bigint")
+                                .HasColumnName("version");
+
+                            NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b1.Property<long>("Version"));
 
                             b1.HasKey("AuctionId");
 

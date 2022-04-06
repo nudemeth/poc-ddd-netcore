@@ -33,6 +33,7 @@ namespace AuctionHouse.Domain.Auction
         public Money MaximumBid { get; private set; }
         public DateTimeOffset TimeOfBid { get; private set; }
         public Price CurrentAuctionPrice { get; private set; }
+        public long Version { get; set; }
 
         public WinningBid RaiseMaximumBidTo(Money newAmount)
         {

@@ -30,12 +30,12 @@ namespace AuctionHouse.Infrastructure.EntityTypeConfigs
                 aa.OwnsOne(typeof(Price), "CurrentAuctionPrice", bb => bb.OwnsOne(typeof(Money), "Amount", cc => cc.Property("Value").HasColumnName("current_price")));
                 aa.OwnsOne(typeof(Money), "MaximumBid", bb => bb.Property("Value").HasColumnName("maximum_bid"));
                 aa.Property("TimeOfBid").HasColumnName("time_of_bid");
-            });
 
-            builder.Property("Version").HasColumnName("version")
-                .IsConcurrencyToken()
-                .ValueGeneratedOnAddOrUpdate()
-                .UseIdentityAlwaysColumn();
+                aa.Property("Version").HasColumnName("version")
+                    .IsConcurrencyToken()
+                    .ValueGeneratedOnAddOrUpdate()
+                    .UseIdentityAlwaysColumn();
+            });
         }
     }
 }
