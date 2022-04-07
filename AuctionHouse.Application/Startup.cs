@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +26,27 @@ namespace AuctionHouse.Application
             });
 
             return services;
+        }
+
+        public static IServiceCollection ConfigureInfrastructureServices(this IServiceCollection services, IConfiguration configuration, Assembly infrastructureAssembly)
+        {
+            var nullableStartUpType = infrastructureAssembly
+                .GetTypes()
+                .FirstOrDefault(t => t.IsAssignableFrom(typeof(IInfrastructureStartup)));
+
+            return nullableStartUpType switch
+            {
+                Type startUpType => LoadInfrastructure(startUpType, services, configuration),
+                _ => services,
+            };
+        }
+
+        private static IServiceCollection LoadInfrastructure(Type startUpType, IServiceCollection services, IConfiguration configuration)
+        {
+            var startUp = Activator.CreateInstance(startUpType);
+            var method = startUpType.GetMethod("ConfigureInfrastructure");
+            
+            return (IServiceCollection)method!.Invoke(startUp, new object[] { services, configuration })!;
         }
     }
 }

@@ -1,5 +1,6 @@
 using AuctionHouse.Application;
 using AuctionHouse.Infrastructure;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
 builder.Services.ConfigureApplicationServices(builder.Configuration);
-builder.Services.ConfigureInfrastructureServices(builder.Configuration);
+builder.Services.ConfigureInfrastructureServices(builder.Configuration, Assembly.LoadFile("AuctionHouse.Infrastructure.dll"));
 
 var app = builder.Build();
 
