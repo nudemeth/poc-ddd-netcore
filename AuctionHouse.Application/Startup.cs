@@ -36,17 +36,38 @@ namespace AuctionHouse.Application
 
             return nullableStartUpType switch
             {
-                Type startUpType => LoadInfrastructure(startUpType, services, configuration),
+                Type startUpType => ConfigureInfrastructure(startUpType, services, configuration),
                 _ => services,
             };
         }
 
-        private static IServiceCollection LoadInfrastructure(Type startUpType, IServiceCollection services, IConfiguration configuration)
+        public static IServiceProvider UseInfrastructureServices(this IServiceProvider provider, IConfiguration configuration, Assembly infrastructureAssembly)
+        {
+            var nullableStartUpType = infrastructureAssembly
+                .GetTypes()
+                .FirstOrDefault(t => t.IsAssignableFrom(typeof(IInfrastructureStartup)));
+
+            return nullableStartUpType switch
+            {
+                Type startUpType => UseInfrastructure(startUpType, provider, configuration),
+                _ => provider,
+            };
+        }
+
+        private static IServiceCollection ConfigureInfrastructure(Type startUpType, IServiceCollection services, IConfiguration configuration)
         {
             var startUp = Activator.CreateInstance(startUpType);
             var method = startUpType.GetMethod("ConfigureInfrastructure");
             
             return (IServiceCollection)method!.Invoke(startUp, new object[] { services, configuration })!;
+        }
+
+        private static IServiceProvider UseInfrastructure(Type startUpType, IServiceProvider provider, IConfiguration configuration)
+        {
+            var startUp = Activator.CreateInstance(startUpType);
+            var method = startUpType.GetMethod("UseInfrastructure");
+
+            return (IServiceProvider)method!.Invoke(startUp, new object[] { provider, configuration })!;
         }
     }
 }

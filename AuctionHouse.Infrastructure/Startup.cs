@@ -20,9 +20,9 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Infrastructure
 {
-    public static class Startup
+    public class Startup : IInfrastructureStartup
     {
-        public static IServiceCollection ConfigureInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+        public IServiceCollection ConfigureInfrastructure(IServiceCollection services, IConfiguration configuration)
         {
             services
                 .AddEntityFrameworkNpgsql()
@@ -45,10 +45,10 @@ namespace AuctionHouse.Infrastructure
             return services;
         }
 
-        public static async Task<IServiceProvider> UseInfrastructure(this IServiceProvider provider, IConfiguration configuration)
+        public IServiceProvider UseInfrastructure(IServiceProvider provider, IConfiguration configuration)
         {
-            using var context = await provider.GetRequiredService<IDbContextFactory<DataContext>>().CreateDbContextAsync();
-            await context.Database.MigrateAsync();
+            using var context = provider.GetRequiredService<IDbContextFactory<DataContext>>().CreateDbContext();
+            context.Database.Migrate();
 
             return provider;
         }
