@@ -2,6 +2,7 @@ using AuctionHouse.Application;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+var directoy = Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location);
 
 // Add services to the container.
 
@@ -11,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
 builder.Services.ConfigureApplicationServices(builder.Configuration);
-builder.Services.ConfigureInfrastructureServices(builder.Configuration, Assembly.LoadFile("./AuctionHouse.Infrastructure.dll"));
+builder.Services.ConfigureInfrastructureServices(builder.Configuration, Assembly.LoadFile($"{directoy}/AuctionHouse.Infrastructure.dll"));
 
 var app = builder.Build();
 
@@ -28,6 +29,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Services.UseInfrastructureServices(builder.Configuration, Assembly.LoadFile("./AuctionHouse.Infrastructure.dll"));
+app.Services.UseInfrastructureServices(builder.Configuration, Assembly.LoadFile($"{directoy}/AuctionHouse.Infrastructure.dll"));
 
 app.Run();

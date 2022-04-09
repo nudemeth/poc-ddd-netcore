@@ -21,11 +21,12 @@
     <ProjectReference Include="..\AuctionHouse.Application\AuctionHouse.Application.csproj" />
   </ItemGroup>
 
-  <!--<Target Name="CopyFiles">
+  <Target Name="CopyFiles" AfterTargets="Build">
+	<Message Text="Copying infrastructure libs task" Importance="high" />
     <ItemGroup>
       <MySourceFiles Include="$(TargetDir)*.dll;$(TargetDir)*.pdb" />
     </ItemGroup>
-    <Copy SourceFiles="@(MySourceFiles)" DestinationFolder="$(ProjectDir)../" />
-  </Target>-->
+    <Copy SourceFiles="@(MySourceFiles)" DestinationFolder="$(ProjectDir)../AuctionHouse.Api/$(OutDir)" />
+  </Target>
 
 </Project>

@@ -32,7 +32,7 @@ namespace AuctionHouse.Application
         {
             var nullableStartUpType = infrastructureAssembly
                 .GetTypes()
-                .FirstOrDefault(t => t.IsAssignableFrom(typeof(IInfrastructureStartup)));
+                .FirstOrDefault(t => typeof(IInfrastructureStartup).IsAssignableFrom(t));
 
             return nullableStartUpType switch
             {
