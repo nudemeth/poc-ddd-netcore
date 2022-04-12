@@ -11,12 +11,13 @@ COPY ["AuctionHouse.Api/AuctionHouse.Api.csproj", "AuctionHouse.Api/"]
 COPY ["AuctionHouse.Infrastructure/AuctionHouse.Infrastructure.csproj", "AuctionHouse.Infrastructure/"]
 COPY ["AuctionHouse.Application/AuctionHouse.Application.csproj", "AuctionHouse.Application/"]
 COPY ["AuctionHouse.Domain/AuctionHouse.Domain.csproj", "AuctionHouse.Domain/"]
-RUN dotnet restore "AuctionHouse.Api/AuctionHouse.Api.csproj" "AuctionHouse.Infrastructure/AuctionHouse.Infrastructure.csproj"
+RUN dotnet restore "AuctionHouse.Api/AuctionHouse.Api.csproj"
+RUN dotnet restore "AuctionHouse.Infrastructure/AuctionHouse.Infrastructure.csproj"
 COPY . .
-WORKDIR "/src/AuctionHouse.Api"
-RUN dotnet build "AuctionHouse.Api.csproj" -c Release -o /app/build
 WORKDIR "/src/AuctionHouse.Infrastructure"
 RUN dotnet build "AuctionHouse.Infrastructure.csproj" -c Release -o /app/build
+WORKDIR "/src/AuctionHouse.Api"
+RUN dotnet build "AuctionHouse.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "AuctionHouse.Api.csproj" -c Release -o /app/publish

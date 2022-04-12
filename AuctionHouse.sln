@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionHouse.Api", "AuctionHouse.Api\AuctionHouse.Api.csproj", "{6987D56D-A97C-4247-8D61-C75F96417565}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CA2978DD-5C44-4F55-9B41-585242061667} = {CA2978DD-5C44-4F55-9B41-585242061667}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionHouse.Application", "AuctionHouse.Application\AuctionHouse.Application.csproj", "{7E01952E-7492-4FE5-AC7F-694455E75A15}"
 EndProject
