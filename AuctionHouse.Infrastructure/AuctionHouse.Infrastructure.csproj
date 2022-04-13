@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	<EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +22,7 @@
     <ProjectReference Include="..\AuctionHouse.Application\AuctionHouse.Application.csproj" />
   </ItemGroup>
 
-  <Target Name="CopyFiles" AfterTargets="Build">
+  <Target Name="CopyFiles" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
 	<Message Text="Copying infrastructure libs task" Importance="high" />
     <ItemGroup>
       <MySourceFiles Include="$(TargetDir)*.dll;$(TargetDir)*.pdb" />
