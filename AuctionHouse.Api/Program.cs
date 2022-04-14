@@ -1,8 +1,11 @@
 using AuctionHouse.Application;
+using AuctionHouse.Application.Plugins;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-var directoy = Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location);
+
+// Load plug-ins
+var infraPlugin = InfrastructurePluginLoadContext.LoadPlugin("./AuctionHouse.Infrastructure.dll");
 
 // Add services to the container.
 
@@ -12,7 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
 builder.Services.ConfigureApplicationServices(builder.Configuration);
-builder.Services.ConfigureInfrastructureServices(builder.Configuration, Assembly.LoadFile($"{directoy}/AuctionHouse.Infrastructure.dll"));
+builder.Services.ConfigureInfrastructureServices(builder.Configuration, infraPlugin);
 
 var app = builder.Build();
 
@@ -29,6 +32,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Services.UseInfrastructureServices(builder.Configuration, Assembly.LoadFile($"{directoy}/AuctionHouse.Infrastructure.dll"));
+app.Services.UseInfrastructureServices(builder.Configuration, infraPlugin);
 
 app.Run();

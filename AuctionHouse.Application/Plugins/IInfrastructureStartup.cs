@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AuctionHouse.Application
+namespace AuctionHouse.Application.Plugins
 {
     public interface IInfrastructureStartup
     {

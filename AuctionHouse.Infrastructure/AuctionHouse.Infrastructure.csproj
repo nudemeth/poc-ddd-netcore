@@ -19,7 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AuctionHouse.Application\AuctionHouse.Application.csproj" />
+	<ProjectReference Include="..\AuctionHouse.Application\AuctionHouse.Application.csproj">
+      <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+	</ProjectReference>
   </ItemGroup>
 
   <Target Name="CopyFiles" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">

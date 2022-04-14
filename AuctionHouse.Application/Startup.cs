@@ -1,4 +1,5 @@
 ﻿using AuctionHouse.Application.Commands;
+using AuctionHouse.Application.Plugins;
 using AuctionHouse.Application.Queries;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
@@ -32,7 +33,7 @@ namespace AuctionHouse.Application
         {
             var nullableStartUpType = infrastructureAssembly
                 .GetTypes()
-                .FirstOrDefault(t => typeof(IInfrastructureStartup).IsAssignableFrom(t));
+                .FirstOrDefault(t => typeof(IInfrastructureStartup).IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface);
 
             return nullableStartUpType switch
             {
@@ -45,7 +46,7 @@ namespace AuctionHouse.Application
         {
             var nullableStartUpType = infrastructureAssembly
                 .GetTypes()
-                .FirstOrDefault(t => t.IsAssignableFrom(typeof(IInfrastructureStartup)));
+                .FirstOrDefault(t => typeof(IInfrastructureStartup).IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface);
 
             return nullableStartUpType switch
             {
