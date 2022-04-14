@@ -12,7 +12,7 @@ namespace AuctionHouse.Application.Plugins
     {
         private AssemblyDependencyResolver resolver;
 
-        public InfrastructurePluginLoadContext(string pluginPath)
+        private InfrastructurePluginLoadContext(string pluginPath)
         {
             resolver = new AssemblyDependencyResolver(pluginPath);
         }
@@ -20,9 +20,9 @@ namespace AuctionHouse.Application.Plugins
         public static Assembly LoadPlugin(string path)
         {
             var directoy = Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location);
-            var loadContext = new InfrastructurePluginLoadContext($"{directoy}{path}");
+            var loadContext = new InfrastructurePluginLoadContext($"{directoy}/{path}");
 
-            return loadContext.LoadFromAssemblyName(AssemblyName.GetAssemblyName($"{directoy}{path}"));
+            return loadContext.LoadFromAssemblyName(AssemblyName.GetAssemblyName($"{directoy}/{path}"));
         }
 
         protected override Assembly Load(AssemblyName assemblyName)
