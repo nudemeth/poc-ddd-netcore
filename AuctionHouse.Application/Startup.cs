@@ -1,4 +1,5 @@
-﻿using AuctionHouse.Application.Commands;
+﻿using AuctionHouse.Application.Behaviours;
+using AuctionHouse.Application.Commands;
 using AuctionHouse.Application.Plugins;
 using AuctionHouse.Application.Queries;
 using MassTransit;
@@ -24,6 +25,10 @@ namespace AuctionHouse.Application
                 config.AddRequestClient<CreateAuctionCommandRequest>();
                 config.AddRequestClient<AuctionStatusQueryRequest>();
                 config.AddRequestClient<BidHistoryQueryRequest>();
+                config.ConfigureMediator((context, mcfg) =>
+                {
+                    mcfg.UseSendFilter(typeof(LoggingBehaviour<>), context);
+                });
             });
 
             return services;

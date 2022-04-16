@@ -1,6 +1,5 @@
 using AuctionHouse.Application;
 using AuctionHouse.Application.Plugins;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
