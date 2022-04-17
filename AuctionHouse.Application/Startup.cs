@@ -2,6 +2,7 @@
 using AuctionHouse.Application.Commands;
 using AuctionHouse.Application.Plugins;
 using AuctionHouse.Application.Queries;
+using FluentValidation;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,7 @@ namespace AuctionHouse.Application
     {
         public static IServiceCollection ConfigureApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddValidatorsFromAssembly(typeof(Startup).Assembly);
             services.AddMediator(config =>
             {
                 config.AddConsumers(typeof(Startup).Assembly);
@@ -28,6 +30,7 @@ namespace AuctionHouse.Application
                 config.ConfigureMediator((context, mcfg) =>
                 {
                     mcfg.UseSendFilter(typeof(LoggingBehaviour<>), context);
+                    mcfg.UseConsumeFilter(typeof(ValidationBehaviour<>), context);
                 });
             });
 

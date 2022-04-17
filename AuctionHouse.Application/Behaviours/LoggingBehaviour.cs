@@ -27,7 +27,7 @@ namespace AuctionHouse.Application.Behaviours
         {
             try
             {
-                logger.LogInformation("{type} --> {message}", typeof(TMessage), context.Message);
+                logger.LogInformation("Sending --> {type} = {message}", typeof(TMessage), context.Message);
                 await next.Send(context);
             }
             catch (System.Exception ex)
