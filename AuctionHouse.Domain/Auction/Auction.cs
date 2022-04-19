@@ -33,6 +33,8 @@ namespace AuctionHouse.Domain.Auction
         private WinningBid? WinningBid { get; set; }
         private DateTimeOffset EndsAt { get; set; }
 
+        public long Version { get; set; }
+
         private bool StillInProgress(DateTimeOffset currentTime)
         {
             return (EndsAt > currentTime);
