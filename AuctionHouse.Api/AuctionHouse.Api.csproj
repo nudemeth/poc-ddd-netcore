@@ -18,4 +18,12 @@
     <ProjectReference Include="..\AuctionHouse.Application\AuctionHouse.Application.csproj" />
   </ItemGroup>
 
+  <Target Name="DeleteFiles" AfterTargets="Clean">
+    <Message Text="Deleting infrastructure libs task" Importance="high" />
+      <ItemGroup>
+        <MySourceFiles Include="$(TargetDir)*.dll;$(TargetDir)*.pdb" />
+      </ItemGroup>
+    <Delete Files="@(MySourceFiles)" />
+  </Target>
+
 </Project>
