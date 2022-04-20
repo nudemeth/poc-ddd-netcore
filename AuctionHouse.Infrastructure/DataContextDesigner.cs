@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace AuctionHouse.Infrastructure
 {
-    public class DataContextFactory : IDesignTimeDbContextFactory<DataContext>
+    public class DataContextDesigner : IDesignTimeDbContextFactory<DataContext>
     {
         public DataContext CreateDbContext(string[] args)
         {
