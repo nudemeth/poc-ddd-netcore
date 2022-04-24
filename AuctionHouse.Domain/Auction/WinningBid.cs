@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace AuctionHouse.Domain.Auction
 {
     public record WinningBid : ValueObject<WinningBid>
     {
-        private WinningBid()
+        [JsonConstructor]
+        public WinningBid()
         {
         }
 
@@ -29,10 +31,10 @@ namespace AuctionHouse.Domain.Auction
             CurrentAuctionPrice = new Price(new Money(bid));
         }
 
-        public Guid Bidder { get; private set; }
-        public Money MaximumBid { get; private set; }
-        public DateTimeOffset TimeOfBid { get; private set; }
-        public Price CurrentAuctionPrice { get; private set; }
+        public Guid Bidder { get; set; }
+        public Money MaximumBid { get; set; }
+        public DateTimeOffset TimeOfBid { get; set; }
+        public Price CurrentAuctionPrice { get; set; }
         
         public WinningBid RaiseMaximumBidTo(Money newAmount)
         {

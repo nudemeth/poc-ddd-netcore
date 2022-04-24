@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace AuctionHouse.Domain.Auction
 {
     public sealed record Money : ValueObject<Money>
     {
-        private decimal Value { get; }
+        public decimal Value { get; }
 
         public Money()
             : this(0m)
@@ -21,6 +22,7 @@ namespace AuctionHouse.Domain.Auction
             this.Value = money.Value;
         }
 
+        [JsonConstructor]
         public Money(decimal value)
         {
             if (value % 0.01m != 0)

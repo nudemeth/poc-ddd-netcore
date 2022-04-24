@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace AuctionHouse.Domain.Auction
@@ -12,6 +13,7 @@ namespace AuctionHouse.Domain.Auction
         {
         }
 
+        [JsonConstructor]
         public Price(Money amount)
         {
             if (amount == null)
