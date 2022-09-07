@@ -1,4 +1,4 @@
-﻿using MassTransit;
+﻿using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Application.Queries
 {
-    public class BidHistoryQueryHandler : IConsumer<BidHistoryQueryRequest>
+    public class BidHistoryQueryHandler : IRequestHandler<BidHistoryQueryRequest, BidHistoryQueryResponse>
     {
         private readonly IDataQueryable<BidHistoryQueryResponse> queryable;
 
@@ -16,10 +16,10 @@ namespace AuctionHouse.Application.Queries
             this.queryable = queryable;
         }
 
-        public async Task Consume(ConsumeContext<BidHistoryQueryRequest> context)
+        public async Task<BidHistoryQueryResponse> Handle(BidHistoryQueryRequest request, CancellationToken cancellationToken)
         {
             var response = await queryable.ExecuteQueryAsync<BidHistoryData>(
-                new Dictionary<string, object> { { "@AuctionId", context.Message.AuctionId } },
+                new Dictionary<string, object> { { "@AuctionId", request.AuctionId } },
                 data => new BidHistoryQueryResponse(
                     data.Select(d => new BidHistoryQueryResponse.BidHistoryQueryResponseItem
                     {
@@ -29,7 +29,7 @@ namespace AuctionHouse.Application.Queries
                     })
                     .ToList()));
 
-            await context.RespondAsync(response);
+            return response;
         }
 
         public record BidHistoryData

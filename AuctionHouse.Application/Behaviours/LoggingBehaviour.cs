@@ -1,39 +1,32 @@
-﻿using MassTransit;
+﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace AuctionHouse.Application.Behaviours
 {
-    public class LoggingBehaviour<TMessage> : IFilter<SendContext<TMessage>>
-        where TMessage : class
+    public class LoggingBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : IRequest<TResponse>
     {
-        private readonly ILogger<LoggingBehaviour<TMessage>> logger;
+        private readonly ILogger<LoggingBehaviour<TRequest, TResponse>> logger;
 
-        public LoggingBehaviour(ILogger<LoggingBehaviour<TMessage>> logger)
+        public LoggingBehaviour(ILogger<LoggingBehaviour<TRequest, TResponse>> logger)
         {
             this.logger = logger;
         }
 
-        public void Probe(ProbeContext context)
+        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            context.CreateFilterScope("logging");
-        }
+            logger.LogInformation($"Request received: {request}");
 
-        public async Task Send(SendContext<TMessage> context, IPipe<SendContext<TMessage>> next)
-        {
-            try
-            {
-                logger.LogInformation("Sending --> {type} = {message}", typeof(TMessage), context.Message);
-                await next.Send(context);
-            }
-            catch (System.Exception ex)
-            {
-                logger.LogError(ex, "{type} ::: {message}", typeof(TMessage), ex.Message);
-            }
+            var response = await next().ConfigureAwait(false);
+
+            logger.LogInformation("Response returned.");
+            return response;
         }
     }
 }

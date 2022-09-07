@@ -3,7 +3,7 @@ using AuctionHouse.Application.Services;
 using AuctionHouse.Domain;
 using AuctionHouse.Domain.Auction;
 using AuctionHouse.Domain.BidHistory;
-using MassTransit;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Application.Commands
 {
-    public class BidOnAuctionCommandHandler : IConsumer<BidOnAuctionCommandRequest>
+    public class BidOnAuctionCommandHandler : IRequestHandler<BidOnAuctionCommandRequest, BidOnAuctionCommandResponse>
     {
         private readonly IAuctionRepository auctionRepository;
         private readonly IUnitOfWork unitOfWork;
@@ -25,10 +25,10 @@ namespace AuctionHouse.Application.Commands
             this.clock = clock;
         }
 
-        public async Task Consume(ConsumeContext<BidOnAuctionCommandRequest> context)
+        public async Task<BidOnAuctionCommandResponse> Handle(BidOnAuctionCommandRequest request, CancellationToken cancellationToken)
         {
-            await Handle(context.Message);
-            await context.RespondAsync(new BidOnAuctionCommandResponse());
+            await Handle(request);
+            return new BidOnAuctionCommandResponse();
         }
 
         private async Task Handle(BidOnAuctionCommandRequest request)

@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
-using MassTransit;
-using Microsoft.Extensions.Logging;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,31 +8,22 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Application.Behaviours
 {
-    public class ValidationBehaviour<TMessage> : IFilter<ConsumeContext<TMessage>>
-        where TMessage : class
+    public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : IRequest<TResponse>
     {
-        private readonly ILogger<ValidationBehaviour<TMessage>> logger;
-        private readonly IEnumerable<IValidator<TMessage>> validators;
+        private readonly IEnumerable<IValidator<TRequest>> validators;
 
-        public ValidationBehaviour(IEnumerable<IValidator<TMessage>> validators, ILogger<ValidationBehaviour<TMessage>> logger)
+        public ValidationBehaviour(IEnumerable<IValidator<TRequest>> validators)
         {
             this.validators = validators;
-            this.logger = logger;
         }
 
-        public void Probe(ProbeContext context)
+        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            context.CreateFilterScope("validation");
-        }
-
-        public async Task Send(ConsumeContext<TMessage> context, IPipe<ConsumeContext<TMessage>> next)
-        {
-            logger.LogInformation("Validating --> {type}", typeof(TMessage));
-
             if (validators.Any())
             {
-                var validationContext = new ValidationContext<TMessage>(context.Message);
-                var results = await Task.WhenAll(validators.Select(v => v.ValidateAsync(validationContext, context.CancellationToken)));
+                var validationContext = new ValidationContext<TRequest>(request);
+                var results = await Task.WhenAll(validators.Select(v => v.ValidateAsync(validationContext, cancellationToken)));
                 var failures = results.SelectMany(r => r.Errors).Where(r => r != null);
 
                 if (failures.Any())
@@ -42,7 +32,7 @@ namespace AuctionHouse.Application.Behaviours
                 }
             }
 
-            await next.Send(context);
+            return await next();
         }
     }
 }

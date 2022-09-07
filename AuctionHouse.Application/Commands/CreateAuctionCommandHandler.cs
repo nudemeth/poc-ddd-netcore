@@ -1,5 +1,5 @@
 ﻿using AuctionHouse.Domain.Auction;
-using MassTransit;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Application.Commands
 {
-    public class CreateAuctionCommandHandler : IConsumer<CreateAuctionCommandRequest>
+    public class CreateAuctionCommandHandler : IRequestHandler<CreateAuctionCommandRequest, CreateAuctionCommandResponse>
     {
         private IAuctionRepository auctionRepository;
         private IUnitOfWork unitOfWork;
@@ -19,14 +19,14 @@ namespace AuctionHouse.Application.Commands
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task Consume(ConsumeContext<CreateAuctionCommandRequest> context)
+        public async Task<CreateAuctionCommandResponse> Handle(CreateAuctionCommandRequest request, CancellationToken cancellationToken)
         {
             var auctionId = Guid.NewGuid();
-            var startingPrice = new Money(context.Message.StartingPrice);
+            var startingPrice = new Money(request.StartingPrice);
 
-            await auctionRepository.AddAsync(new Auction(auctionId, startingPrice, context.Message.EndsAt));
+            await auctionRepository.AddAsync(new Auction(auctionId, startingPrice, request.EndsAt));
             await unitOfWork.SaveAsync();
-            await context.RespondAsync(new CreateAuctionCommandResponse { AuctionId = auctionId });
+            return new CreateAuctionCommandResponse { AuctionId = auctionId };
         }
     }
 }

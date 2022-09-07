@@ -1,7 +1,7 @@
 ﻿using AuctionHouse.Application.Exception;
 using AuctionHouse.Application.Services;
 using AuctionHouse.Domain.BidHistory;
-using MassTransit;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Application.Queries
 {
-    public class AuctionStatusQueryHandler : IConsumer<AuctionStatusQueryRequest>
+    public class AuctionStatusQueryHandler : IRequestHandler<AuctionStatusQueryRequest, AuctionStatusQueryResponse>
     {
         private readonly IDataQueryable<AuctionStatusQueryResponse> queryable;
         private readonly IBidHistoryRepository bidHistoryRepository;
@@ -23,16 +23,16 @@ namespace AuctionHouse.Application.Queries
             this.clock = clock;
         }
 
-        public async Task Consume(ConsumeContext<AuctionStatusQueryRequest> context)
+        public async Task<AuctionStatusQueryResponse> Handle(AuctionStatusQueryRequest request, CancellationToken cancellationToken)
         {
-            var numberOfBids = await bidHistoryRepository.NoOfBidsForAsync(context.Message.AuctionId);
+            var numberOfBids = await bidHistoryRepository.NoOfBidsForAsync(request.AuctionId);
             var response = await queryable.ExecuteQueryAsync<AuctionData>(
-                new Dictionary<string, object> { { "@AuctionId", context.Message.AuctionId } },
+                new Dictionary<string, object> { { "@AuctionId", request.AuctionId } },
                 data => data
                     .Select(d => new AuctionStatusQueryResponse(d.Id, d.CurrentPrice, d.AuctionEnds, d.WinningBidderId, numberOfBids, clock.Time()))
-                    .SingleOrDefault() ?? throw new NotFoundException($"The auction cannot be found: AuctionId = {context.Message.AuctionId}"));
+                    .SingleOrDefault() ?? throw new NotFoundException($"The auction cannot be found: AuctionId = {request.AuctionId}"));
 
-            await context.RespondAsync(response);
+            return response;
         }
 
         public record AuctionData

@@ -4,7 +4,7 @@ using AuctionHouse.Domain;
 using AuctionHouse.Domain.Auction;
 using AuctionHouse.Domain.BidHistory;
 using AuctionHouse.Infrastructure.EntityTypeConfigs;
-using MassTransit.Mediator;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

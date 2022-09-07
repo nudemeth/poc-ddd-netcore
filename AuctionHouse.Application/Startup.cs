@@ -3,7 +3,7 @@ using AuctionHouse.Application.Commands;
 using AuctionHouse.Application.Plugins;
 using AuctionHouse.Application.Queries;
 using FluentValidation;
-using MassTransit;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -20,19 +20,7 @@ namespace AuctionHouse.Application
         public static IServiceCollection ConfigureApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddValidatorsFromAssembly(typeof(Startup).Assembly);
-            services.AddMediator(config =>
-            {
-                config.AddConsumers(typeof(Startup).Assembly);
-                config.AddRequestClient<BidOnAuctionCommandRequest>();
-                config.AddRequestClient<CreateAuctionCommandRequest>();
-                config.AddRequestClient<AuctionStatusQueryRequest>();
-                config.AddRequestClient<BidHistoryQueryRequest>();
-                config.ConfigureMediator((context, mcfg) =>
-                {
-                    mcfg.UseSendFilter(typeof(LoggingBehaviour<>), context);
-                    mcfg.UseConsumeFilter(typeof(ValidationBehaviour<>), context);
-                });
-            });
+            services.AddMediatR(typeof(Startup).Assembly);
 
             return services;
         }
