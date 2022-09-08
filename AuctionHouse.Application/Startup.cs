@@ -19,8 +19,11 @@ namespace AuctionHouse.Application
     {
         public static IServiceCollection ConfigureApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddValidatorsFromAssembly(typeof(Startup).Assembly);
-            services.AddMediatR(typeof(Startup).Assembly);
+            services
+                .AddValidatorsFromAssembly(typeof(Startup).Assembly)
+                .AddMediatR(typeof(Startup).Assembly)
+                .AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>)) //First is outermost
+                .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
             return services;
         }

@@ -25,7 +25,6 @@ namespace AuctionHouse.Application.DomainEventHandlers
         {
             var bidEvent = new Bid(notification.AuctionId, notification.Bidder, notification.AmountBid, notification.TimeOfBid);
             await bidHistoryRepository.AddAsync(bidEvent);
-            await unitOfWork.SaveAsync();
         }
     }
 }
