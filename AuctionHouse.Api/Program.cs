@@ -1,11 +1,13 @@
 using AuctionHouse.Application;
-using AuctionHouse.Application.Plugins;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Load plug-ins
 var infraPlugin = builder.Configuration["Plugins:Infrastructure"];
-var infraAssembly = InfrastructurePluginLoadContext.LoadPlugin(infraPlugin);
+var directoy = Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location);
+var path = $"{directoy}/{infraPlugin}";
+var infraAssembly = Assembly.LoadFrom(path);
 
 // Add services to the container.
 

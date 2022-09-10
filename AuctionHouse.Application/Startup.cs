@@ -2,6 +2,7 @@
 using AuctionHouse.Application.Commands;
 using AuctionHouse.Application.Plugins;
 using AuctionHouse.Application.Queries;
+using AuctionHouse.Application.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
