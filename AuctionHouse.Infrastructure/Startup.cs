@@ -21,9 +21,9 @@ using System.Threading.Tasks;
 
 namespace AuctionHouse.Infrastructure
 {
-    public class Startup : IInfrastructureStartup
+    public static class Startup
     {
-        public IServiceCollection ConfigureInfrastructure(IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ConfigureInfrastructureService(this IServiceCollection services, IConfiguration configuration)
         {
             services
                 .AddEntityFrameworkNpgsql()
@@ -46,7 +46,7 @@ namespace AuctionHouse.Infrastructure
             return services;
         }
 
-        public IServiceProvider UseInfrastructure(IServiceProvider provider, IConfiguration configuration)
+        public static IServiceProvider UseInfrastructureService(this IServiceProvider provider, IConfiguration configuration)
         {
             using var context = provider.GetRequiredService<IDbContextFactory<DataContext>>().CreateDbContext();
             context.Database.Migrate();
