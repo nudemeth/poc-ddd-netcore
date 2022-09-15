@@ -1,5 +1,4 @@
 ﻿using AuctionHouse.Application;
-using AuctionHouse.Application.Plugins;
 using AuctionHouse.Application.Queries;
 using AuctionHouse.Application.Services;
 using AuctionHouse.Domain.Auction;
